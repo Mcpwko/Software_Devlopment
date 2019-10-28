@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ValaisEat
+namespace ConsoleApp
 {
     class Program
     {
