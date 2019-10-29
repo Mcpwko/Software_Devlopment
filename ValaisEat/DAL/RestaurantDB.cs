@@ -65,7 +65,7 @@ namespace DAL
 
 
 
-        public List<Restaurant> GetHotels()
+        public List<Restaurant> GetRestaurants()
         {
             List<Restaurant> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -111,7 +111,7 @@ namespace DAL
         }
 
 
-        public Restaurant AddHotel(Restaurant restaurant)
+        public Restaurant AddRestaurant(Restaurant restaurant)
         {
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -188,7 +188,7 @@ namespace DAL
         }
 
 
-        public int DeleteRestaurants(int IdRestaurants)
+        public int DeleteRestaurant(int idRestaurant)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -200,7 +200,7 @@ namespace DAL
 
                     string query = "DELETE FROM Restaurants WHERE IdRestaurants=@IdRestaurants";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", IdRestaurants);
+                    cmd.Parameters.AddWithValue("@IdRestaurants", idRestaurant);
 
                     cn.Open();
 
@@ -216,14 +216,5 @@ namespace DAL
 
         }
 
-        public Restaurant AddRestaurant(Restaurant restaurant)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int DeleteRestaurant(int idRestaurant)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
