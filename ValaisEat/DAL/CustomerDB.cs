@@ -196,12 +196,12 @@ namespace DAL
 
         }
 
-        public Customer AddCustomer(Restaurant restaurant)
+        public Customer AddCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
 
-        public int DeleteRestaurant(int idRestaurant)
+        public int DeleteCustomer(int idClient)
         {
             throw new NotImplementedException();
         }
