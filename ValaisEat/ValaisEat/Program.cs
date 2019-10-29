@@ -16,8 +16,21 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            
 
-    }
+            var restaurantsManager = new RestaurantManager(Configuration);
+
+            var restaurants = restaurantsManager.GetRestaurants();
+
+            foreach (var restaurant in restaurants)
+            {
+                Console.WriteLine(restaurant.ToString());
+            }
+
+            var restaurant1 = restaurantsManager.GetRestaurant(1);
+
+            Console.WriteLine(restaurant1.ToString());
+
+
+        }
     }
 }
