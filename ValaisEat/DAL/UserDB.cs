@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DAL
 {
-    public class UserDB
+    public class UserDB : IUserDB
     {
         public IConfiguration Configuration { get; }
         public UserDB(IConfiguration configuration)
@@ -124,19 +124,19 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into User(Name,Openingdate,Schedule,Type,Adress,IdCities) VALUES(@Name,@Openingdate,@Schedule,@Type,@Adress,@IdCities);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into User(Name,Firstname,Adress,Telephon,Email,Password,Date,IdCities) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCities);SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
 
                     cmd.Parameters.AddWithValue("@Name", user.Name);
-                    cmd.Parameters.AddWithValue("@Description", user.Firstname);
-                    cmd.Parameters.AddWithValue("@Location", user.Adress);
-                    cmd.Parameters.AddWithValue("@Category", user.Telephon);
-                    cmd.Parameters.AddWithValue("@HasWifi", user.Email);
-                    cmd.Parameters.AddWithValue("@HasParking", user.Password);
-                    cmd.Parameters.AddWithValue("@HasParking", user.Date);
-                    cmd.Parameters.AddWithValue("@HasParking", user.IdCities);
+                    cmd.Parameters.AddWithValue("@Firstname", user.Firstname);
+                    cmd.Parameters.AddWithValue("@Adress", user.Adress);
+                    cmd.Parameters.AddWithValue("@Telephon", user.Telephon);
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
+                    cmd.Parameters.AddWithValue("@Password", user.Password);
+                    cmd.Parameters.AddWithValue("@Date", user.Date);
+                    cmd.Parameters.AddWithValue("@IdCities", user.IdCities);
 
 
                     cn.Open();
@@ -156,7 +156,7 @@ namespace DAL
         }
 
 
-        public int UpdateRestaurant(Restaurant restaurant)
+        public int UpdateUser(User user)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -166,17 +166,19 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "UPDATE Restaurants SET Name=@Name,Openingdate=@Openingdate,Schedule=@Schedule,Type=@Type,Adress=@Adress,IdCities=@IdCities WHERE IdRestaurants=@IdRestaurants";
+                    string query = "UPDATE User SET Name=@Name,Firstname=@Firstname,Adress=@Adress,Telephon=@Telephon,Email=@Email,Password=@Password,IdCities=@IdCities WHERE IdUser=@IdUser";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
-                    cmd.Parameters.AddWithValue("@IdRestaurants", restaurant.IdRestaurants);
-                    cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                    cmd.Parameters.AddWithValue("@Description", restaurant.Openingdate);
-                    cmd.Parameters.AddWithValue("@Location", restaurant.Schedule);
-                    cmd.Parameters.AddWithValue("@Category", restaurant.Type);
-                    cmd.Parameters.AddWithValue("@HasWifi", restaurant.Adress);
-                    cmd.Parameters.AddWithValue("@HasParking", restaurant.IdCities);
+                    cmd.Parameters.AddWithValue("@IdUser", user.IdUser);
+                    cmd.Parameters.AddWithValue("@Name", user.Name);
+                    cmd.Parameters.AddWithValue("@Firstname", user.Firstname);
+                    cmd.Parameters.AddWithValue("@Adress", user.Adress);
+                    cmd.Parameters.AddWithValue("@Telephon", user.Telephon);
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
+                    cmd.Parameters.AddWithValue("@Password", user.Password);
+                    cmd.Parameters.AddWithValue("@Date", user.Date);
+                    cmd.Parameters.AddWithValue("@IdCities", user.IdCities);
 
 
                     cn.Open();
@@ -194,7 +196,7 @@ namespace DAL
         }
 
 
-        public int DeleteRestaurant(int idRestaurant)
+        public int DeleteUser(int idUser)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -204,9 +206,9 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "DELETE FROM Restaurants WHERE IdRestaurants=@IdRestaurants";
+                    string query = "DELETE FROM User WHERE IdUser=@IdUser";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", idRestaurant);
+                    cmd.Parameters.AddWithValue("@IdUser", idUser);
 
                     cn.Open();
 
@@ -221,6 +223,5 @@ namespace DAL
             return result;
 
         }
-
     }
 }

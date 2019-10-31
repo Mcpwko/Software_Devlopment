@@ -16,7 +16,6 @@ namespace ConsoleApp
 
         static void Main(string[] args)
         {
-            Console.WriteLine(Directory.GetCurrentDirectory());
             var restaurantsManager = new RestaurantManager(Configuration);
 
             var restaurants = restaurantsManager.GetRestaurants();
