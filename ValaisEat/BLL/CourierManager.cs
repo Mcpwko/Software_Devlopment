@@ -16,8 +16,6 @@ namespace BLL
             courierDB = new CourierDB(configuration);
         }
 
-
-
         public List<Courier> GetCouriers()
         {
             return courierDB.GetCouriers();
@@ -27,17 +25,10 @@ namespace BLL
         {
             return courierDB.GetCourier(IdCourier);
         }
-        public Courier AddCourier(Courier courier)
-        {
-            return courierDB.AddCourier(courier);
-        }
+
         public int UpdateCourier(Courier courier)
         {
             return courierDB.UpdateCourier(courier);
-        }
-        public int DeleteCourier(int IdCourier)
-        {
-            return courierDB.DeleteCourier(IdCourier);
         }
     }
 }

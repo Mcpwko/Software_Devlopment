@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DAL
 {
-    public class UserDB : IUserDB
+    public class UserDB
     {
         public IConfiguration Configuration { get; }
         public UserDB(IConfiguration configuration)
@@ -28,7 +28,7 @@ namespace DAL
                 {
                     string query = "SELECT * FROM User WHERE IdUser = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", idUser);
 
                     cn.Open();
 
@@ -129,17 +129,19 @@ namespace DAL
 
 
 
-                    cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                    cmd.Parameters.AddWithValue("@Description", restaurant.Openingdate);
-                    cmd.Parameters.AddWithValue("@Location", restaurant.Schedule);
-                    cmd.Parameters.AddWithValue("@Category", restaurant.Type);
-                    cmd.Parameters.AddWithValue("@HasWifi", restaurant.Adress);
-                    cmd.Parameters.AddWithValue("@HasParking", restaurant.IdCities);
+                    cmd.Parameters.AddWithValue("@Name", user.Name);
+                    cmd.Parameters.AddWithValue("@Description", user.Firstname);
+                    cmd.Parameters.AddWithValue("@Location", user.Adress);
+                    cmd.Parameters.AddWithValue("@Category", user.Telephon);
+                    cmd.Parameters.AddWithValue("@HasWifi", user.Email);
+                    cmd.Parameters.AddWithValue("@HasParking", user.Password);
+                    cmd.Parameters.AddWithValue("@HasParking", user.Date);
+                    cmd.Parameters.AddWithValue("@HasParking", user.IdCities);
 
 
                     cn.Open();
 
-                    restaurant.IdRestaurants = Convert.ToInt32(cmd.ExecuteScalar());
+                    user.IdUser = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception e)
@@ -147,7 +149,7 @@ namespace DAL
                 throw e;
             }
 
-            return restaurant;
+            return user;
 
 
 

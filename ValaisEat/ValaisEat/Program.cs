@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 
-
 namespace ConsoleApp
 {
     class Program
@@ -13,10 +12,11 @@ namespace ConsoleApp
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
+        
 
         static void Main(string[] args)
         {
-
+            Console.WriteLine(Directory.GetCurrentDirectory());
             var restaurantsManager = new RestaurantManager(Configuration);
 
             var restaurants = restaurantsManager.GetRestaurants();
@@ -25,10 +25,6 @@ namespace ConsoleApp
             {
                 Console.WriteLine(restaurant.ToString());
             }
-
-            var restaurant1 = restaurantsManager.GetRestaurant(1);
-
-            Console.WriteLine(restaurant1.ToString());
 
 
         }

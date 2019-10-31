@@ -28,7 +28,7 @@ namespace DAL
                 {
                     string query = "SELECT * FROM Courier WHERE IdCourier = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", IdCourier);
 
                     cn.Open();
 
@@ -196,14 +196,5 @@ namespace DAL
 
         }
 
-        public Courier AddCourier(Courier courier)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int DeleteCourier(int idCourier)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

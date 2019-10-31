@@ -196,14 +196,5 @@ namespace DAL
 
         }
 
-        public Customer AddCustomer(Customer customer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int DeleteCustomer(int idClient)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

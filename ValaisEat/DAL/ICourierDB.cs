@@ -11,9 +11,7 @@ namespace DAL
 
         List<Courier> GetCouriers();
         Courier GetCourier(int IdCourier);
-        Courier AddCourier(Courier courier);
         int UpdateCourier(Courier courier);
-        int DeleteCourier(int IdCourier);
 
 
     }

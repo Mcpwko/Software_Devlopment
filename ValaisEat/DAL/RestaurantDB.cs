@@ -41,7 +41,7 @@ namespace DAL
 
                             restaurant.IdRestaurants = (int)dr["IdRestaurants"];
                             restaurant.Name = (string)dr["Name"];
-                            restaurant.Openingdate = (string)dr["OpeningDate"];
+                            restaurant.Openingdate = (DateTime)dr["OpeningDate"];
                             restaurant.Schedule = (string)dr["Schedule"];
                             restaurant.Type = (string)dr["Type"];
                             restaurant.Adress = (string)dr["Adress"];
@@ -90,7 +90,7 @@ namespace DAL
 
                             restaurant.IdRestaurants = (int)dr["IdRestaurants"];
                             restaurant.Name = (string)dr["Name"];
-                            restaurant.Openingdate = (string)dr["OpeningDate"];
+                            restaurant.Openingdate = (DateTime)dr["OpeningDate"];
                             restaurant.Schedule = (string)dr["Schedule"];
                             restaurant.Type = (string)dr["Type"];
                             restaurant.Adress = (string)dr["Adress"];
