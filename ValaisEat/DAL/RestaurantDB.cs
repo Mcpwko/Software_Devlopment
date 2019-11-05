@@ -126,11 +126,11 @@ namespace DAL
 
 
                     cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                    cmd.Parameters.AddWithValue("@Description", restaurant.Openingdate);
-                    cmd.Parameters.AddWithValue("@Location", restaurant.Schedule);
-                    cmd.Parameters.AddWithValue("@Category", restaurant.Type);
-                    cmd.Parameters.AddWithValue("@HasWifi", restaurant.Adress);
-                    cmd.Parameters.AddWithValue("@HasParking", restaurant.IdCities);
+                    cmd.Parameters.AddWithValue("@Openingdate", restaurant.Openingdate);
+                    cmd.Parameters.AddWithValue("@Schedule", restaurant.Schedule);
+                    cmd.Parameters.AddWithValue("@Type", restaurant.Type);
+                    cmd.Parameters.AddWithValue("@Adress", restaurant.Adress);
+                    cmd.Parameters.AddWithValue("@IdCities", restaurant.IdCities);
   
 
                     cn.Open();
@@ -166,11 +166,11 @@ namespace DAL
 
                     cmd.Parameters.AddWithValue("@IdRestaurants", restaurant.IdRestaurants);
                     cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                    cmd.Parameters.AddWithValue("@Description", restaurant.Openingdate);
-                    cmd.Parameters.AddWithValue("@Location", restaurant.Schedule);
-                    cmd.Parameters.AddWithValue("@Category", restaurant.Type);
-                    cmd.Parameters.AddWithValue("@HasWifi", restaurant.Adress);
-                    cmd.Parameters.AddWithValue("@HasParking", restaurant.IdCities);
+                    cmd.Parameters.AddWithValue("@Openingdate", restaurant.Openingdate);
+                    cmd.Parameters.AddWithValue("@Schedule", restaurant.Schedule);
+                    cmd.Parameters.AddWithValue("@Type", restaurant.Type);
+                    cmd.Parameters.AddWithValue("@Adress", restaurant.Adress);
+                    cmd.Parameters.AddWithValue("@IdCities", restaurant.IdCities);
            
 
                     cn.Open();
