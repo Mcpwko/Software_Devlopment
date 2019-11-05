@@ -31,7 +31,7 @@ namespace BLL
         {
             return restaurantDB.AddRestaurant(restaurant);
         }
-        public int UpdateHotel(Restaurant restaurant)
+        public int UpdateRestaurant(Restaurant restaurant)
         {
             return restaurantDB.UpdateRestaurant(restaurant);
         }

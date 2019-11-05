@@ -3,22 +3,21 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace DAL
 {
-    public class DishesDB : IDishesDB
+    public class OrderDB : IOrderDB
     {
         public IConfiguration Configuration { get; }
-        public DishesDB(IConfiguration configuration)
+        public OrderDB(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
 
-        public Dishes GetDish(int id)
+        public Order GetOrder(int id)
         {
-            Dishes dish = null;
+            Order order = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
@@ -26,7 +25,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Dishes WHERE IdDishes = @id";
+                    string query = "SELECT * FROM Order WHERE IdOrder = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -37,15 +36,15 @@ namespace DAL
                         if (dr.Read())
                         {
 
-                            dish = new Dishes();
+                            order = new Order();
 
-                            dish.IdDishes = (int)dr["IdDishes"];
-                            dish.Name = (string)dr["Name"];
-                            dish.Description = (string)dr["Description"];
-                            dish.Price = (float)dr["Price"];
-                            dish.Title = (string)dr["Title"];
-                            dish.Status = (string)dr["Status"];
-                            dish.IdRestaurants = (int)dr["IdRestaurants"];
+                            order.IdOrder = (int)dr["IdOrder"];
+                            order.Status = (string)dr["Status"];
+                            order.Date = (DateTime)dr["Date"];
+                            order.ShippingDate = (DateTime)dr["ShippingDate"];
+                            order.TotalPrice = (int)dr["TotalPrice"];
+                            order.IdCourier = (int)dr["IdCourier"];
+                            order.IdClient = (int)dr["IdClient"];
 
 
                         }
@@ -57,7 +56,7 @@ namespace DAL
                 throw e;
             }
 
-            return dish;
+            return order;
 
         }
 
@@ -65,16 +64,16 @@ namespace DAL
 
 
 
-        public List<Dishes> GetDishes()
+        public List<Order> GetOrders()
         {
-            List<Dishes> results = null;
+            List<Order> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Dishes";
+                    string query = "SELECT * FROM Order";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -84,20 +83,21 @@ namespace DAL
                         while (dr.Read())
                         {
                             if (results == null)
-                                results = new List<Dishes>();
+                                results = new List<Order>();
 
-                            Dishes dish = new Dishes();
+                            Order order = new Order();
 
-                            dish.IdDishes = (int)dr["IdDishes"];
-                            dish.Name = (string)dr["Name"];
-                            dish.Description = (string)dr["Description"];
-                            dish.Price = (float)dr["Price"];
-                            dish.Title = (string)dr["Title"];
-                            dish.Status = (string)dr["Status"];
-                            dish.IdRestaurants = (int)dr["IDRestaurants"];
+                            order.IdOrder = (int)dr["IdOrder"];
+                            order.Status = (string)dr["Status"];
+                            order.Date = (DateTime)dr["Date"];
+                            order.ShippingDate = (DateTime)dr["ShippingDate"];
+                            order.TotalPrice = (int)dr["TotalPrice"];
+                            order.IdCourier = (int)dr["IdCourier"];
+                            order.IdClient = (int)dr["IdClient"];
 
 
-                            results.Add(dish);
+
+                            results.Add(order);
                         }
                     }
                 }
@@ -111,7 +111,7 @@ namespace DAL
         }
 
 
-        public Dishes AddDish(Dishes dish)
+        public Order AddOrder(Order order)
         {
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -120,22 +120,22 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into Dishes(Name,Description,Price,Title,Status,IdRestaurants) VALUES(@Name,@Description,@Price,@Title,@Status,@IdRestaurants);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into Order(Status,Date,ShippingDate,TotalPrice,IdCourier,IdClient) VALUES(@Status,@Date,@ShippingDate,@TotalPrice,@IdCourier,@IdClient);SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
 
-                    cmd.Parameters.AddWithValue("@Name", dish.Name);
-                    cmd.Parameters.AddWithValue("@Description", dish.Description);
-                    cmd.Parameters.AddWithValue("@Price", dish.Price);
-                    cmd.Parameters.AddWithValue("@Title", dish.Title);
-                    cmd.Parameters.AddWithValue("@Status", dish.Status);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", dish.IdRestaurants);
+                    cmd.Parameters.AddWithValue("@Status", order.Status);
+                    cmd.Parameters.AddWithValue("@Date", order.Date);
+                    cmd.Parameters.AddWithValue("@ShippingDate", order.ShippingDate);
+                    cmd.Parameters.AddWithValue("@TotalPrice", order.TotalPrice);
+                    cmd.Parameters.AddWithValue("@IdCourier", order.IdCourier);
+                    cmd.Parameters.AddWithValue("@IdClient", order.IdClient);
 
 
                     cn.Open();
 
-                    dish.IdDishes = Convert.ToInt32(cmd.ExecuteScalar());
+                    order.IdOrder = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception e)
@@ -143,14 +143,14 @@ namespace DAL
                 throw e;
             }
 
-            return dish;
+            return order;
 
 
 
         }
 
 
-        public int UpdateDish(Dishes dish)
+        public int UpdateOrder(Order order)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -160,18 +160,17 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "UPDATE Dishes SET Name=@Name,Description=@Description,Price=@Price,Title=@Title,Status=@Status,IdRestaurants=@IdRestaurants WHERE IdDishes=@IdDishes";
+                    string query = "UPDATE Order SET Status=@Status,Date=@Date,ShippingDate=@ShippingDate,TotalPrice=@TotalPrice,IdCourier=@IdCourier,IdClient=@IdClient WHERE IdOrder=@IdOrder";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
-                    cmd.Parameters.AddWithValue("@IdRestaurants", dish.IdRestaurants);
-                    cmd.Parameters.AddWithValue("@Name", dish.Name);
-                    cmd.Parameters.AddWithValue("@Description", dish.Description);
-                    cmd.Parameters.AddWithValue("@Price", dish.Price);
-                    cmd.Parameters.AddWithValue("@Title", dish.Title);
-                    cmd.Parameters.AddWithValue("@Status", dish.Status);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", dish.IdRestaurants);
-
+                    cmd.Parameters.AddWithValue("@IdOrder", order.IdOrder);
+                    cmd.Parameters.AddWithValue("@Status", order.Status);
+                    cmd.Parameters.AddWithValue("@Date", order.Date);
+                    cmd.Parameters.AddWithValue("@ShippingDate", order.ShippingDate);
+                    cmd.Parameters.AddWithValue("@TotalPrice", order.TotalPrice);
+                    cmd.Parameters.AddWithValue("@IdCourier", order.IdCourier);
+                    cmd.Parameters.AddWithValue("@IdClient", order.IdClient);
 
                     cn.Open();
 
@@ -188,7 +187,7 @@ namespace DAL
         }
 
 
-        public int DeleteDish(int idDish)
+        public int DeleteOrder(int idOrder)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -198,9 +197,9 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "DELETE FROM Dishes WHERE IdDishes=@IdDishes";
+                    string query = "DELETE FROM Order WHERE IdOrder=@IdOrder";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdDishes", idDish);
+                    cmd.Parameters.AddWithValue("@IdOrder", idOrder);
 
                     cn.Open();
 
@@ -213,8 +212,6 @@ namespace DAL
             }
 
             return result;
-
         }
-
     }
 }

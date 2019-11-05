@@ -7,18 +7,18 @@ using System.Text;
 
 namespace DAL
 {
-    public class DishesDB : IDishesDB
+    public class CitiesDB : ICitiesDB
     {
         public IConfiguration Configuration { get; }
-        public DishesDB(IConfiguration configuration)
+        public CitiesDB(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
 
-        public Dishes GetDish(int id)
+        public Cities GetCity(int id)
         {
-            Dishes dish = null;
+            Cities city = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
@@ -26,7 +26,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Dishes WHERE IdDishes = @id";
+                    string query = "SELECT * FROM Cities WHERE IdCities = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -37,15 +37,11 @@ namespace DAL
                         if (dr.Read())
                         {
 
-                            dish = new Dishes();
+                            city = new Cities();
 
-                            dish.IdDishes = (int)dr["IdDishes"];
-                            dish.Name = (string)dr["Name"];
-                            dish.Description = (string)dr["Description"];
-                            dish.Price = (float)dr["Price"];
-                            dish.Title = (string)dr["Title"];
-                            dish.Status = (string)dr["Status"];
-                            dish.IdRestaurants = (int)dr["IdRestaurants"];
+                            city.IdCities = (int)dr["IdCities"];
+                            city.NPA = (int)dr["NPA"];
+                            city.City = (string)dr["City"];
 
 
                         }
@@ -57,7 +53,7 @@ namespace DAL
                 throw e;
             }
 
-            return dish;
+            return city;
 
         }
 
@@ -65,16 +61,16 @@ namespace DAL
 
 
 
-        public List<Dishes> GetDishes()
+        public List<Cities> GetCities()
         {
-            List<Dishes> results = null;
+            List<Cities> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Dishes";
+                    string query = "SELECT * FROM Cities";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -84,20 +80,16 @@ namespace DAL
                         while (dr.Read())
                         {
                             if (results == null)
-                                results = new List<Dishes>();
+                                results = new List<Cities>();
 
-                            Dishes dish = new Dishes();
+                            Cities city = new Cities();
 
-                            dish.IdDishes = (int)dr["IdDishes"];
-                            dish.Name = (string)dr["Name"];
-                            dish.Description = (string)dr["Description"];
-                            dish.Price = (float)dr["Price"];
-                            dish.Title = (string)dr["Title"];
-                            dish.Status = (string)dr["Status"];
-                            dish.IdRestaurants = (int)dr["IDRestaurants"];
+                            city.IdCities = (int)dr["IdCities"];
+                            city.NPA = (int)dr["NPA"];
+                            city.City = (string)dr["City"];
 
 
-                            results.Add(dish);
+                            results.Add(city);
                         }
                     }
                 }
@@ -111,7 +103,7 @@ namespace DAL
         }
 
 
-        public Dishes AddDish(Dishes dish)
+        public Cities AddCity(Cities city)
         {
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -120,22 +112,18 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into Dishes(Name,Description,Price,Title,Status,IdRestaurants) VALUES(@Name,@Description,@Price,@Title,@Status,@IdRestaurants);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into Cities(NPA,City) VALUES(@NPA,@City);SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
 
-                    cmd.Parameters.AddWithValue("@Name", dish.Name);
-                    cmd.Parameters.AddWithValue("@Description", dish.Description);
-                    cmd.Parameters.AddWithValue("@Price", dish.Price);
-                    cmd.Parameters.AddWithValue("@Title", dish.Title);
-                    cmd.Parameters.AddWithValue("@Status", dish.Status);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", dish.IdRestaurants);
+                    cmd.Parameters.AddWithValue("@Name", city.NPA);
+                    cmd.Parameters.AddWithValue("@Description", city.City);
 
 
                     cn.Open();
 
-                    dish.IdDishes = Convert.ToInt32(cmd.ExecuteScalar());
+                    city.IdCities = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception e)
@@ -143,14 +131,14 @@ namespace DAL
                 throw e;
             }
 
-            return dish;
+            return city;
 
 
 
         }
 
 
-        public int UpdateDish(Dishes dish)
+        public int UpdateCity(Cities city)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -160,18 +148,13 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "UPDATE Dishes SET Name=@Name,Description=@Description,Price=@Price,Title=@Title,Status=@Status,IdRestaurants=@IdRestaurants WHERE IdDishes=@IdDishes";
+                    string query = "UPDATE Cities SET NPA=@NPA,City=@City WHERE IdCities=@IdCities";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
-                    cmd.Parameters.AddWithValue("@IdRestaurants", dish.IdRestaurants);
-                    cmd.Parameters.AddWithValue("@Name", dish.Name);
-                    cmd.Parameters.AddWithValue("@Description", dish.Description);
-                    cmd.Parameters.AddWithValue("@Price", dish.Price);
-                    cmd.Parameters.AddWithValue("@Title", dish.Title);
-                    cmd.Parameters.AddWithValue("@Status", dish.Status);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", dish.IdRestaurants);
-
+                    cmd.Parameters.AddWithValue("@IdRestaurants", city.IdCities);
+                    cmd.Parameters.AddWithValue("@Name", city.NPA);
+                    cmd.Parameters.AddWithValue("@Description", city.City);
 
                     cn.Open();
 
@@ -188,7 +171,7 @@ namespace DAL
         }
 
 
-        public int DeleteDish(int idDish)
+        public int DeleteCity(int idCity)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -198,9 +181,9 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "DELETE FROM Dishes WHERE IdDishes=@IdDishes";
+                    string query = "DELETE FROM Cities WHERE IdCities=@IdCities";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdDishes", idDish);
+                    cmd.Parameters.AddWithValue("@IdDishes", idCity);
 
                     cn.Open();
 
@@ -215,6 +198,5 @@ namespace DAL
             return result;
 
         }
-
     }
 }
