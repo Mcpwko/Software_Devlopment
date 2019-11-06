@@ -168,7 +168,7 @@ namespace DAL
         }
 
 
-        public int DeleteCourier(int IdCourier)
+        public int DeleteCourier(int idCourier)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -180,7 +180,7 @@ namespace DAL
 
                     string query = "DELETE FROM Courier WHERE IdCourier=@IdCourier";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdCourier", IdCourier);
+                    cmd.Parameters.AddWithValue("@IdCourier", idCourier);
 
                     cn.Open();
 
@@ -194,11 +194,6 @@ namespace DAL
 
             return result;
 
-        }
-
-        public int DeleteCourier(Courier courier)
-        {
-            throw new NotImplementedException();
         }
     }
 }
