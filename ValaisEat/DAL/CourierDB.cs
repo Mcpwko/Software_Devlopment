@@ -196,5 +196,9 @@ namespace DAL
 
         }
 
+        public int DeleteCourier(Courier courier)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

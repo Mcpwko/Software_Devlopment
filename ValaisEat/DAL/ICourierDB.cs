@@ -13,6 +13,8 @@ namespace DAL
         Courier GetCourier(int IdCourier);
         int UpdateCourier(Courier courier);
 
+        int DeleteCourier(Courier courier);
+
 
     }
 }
