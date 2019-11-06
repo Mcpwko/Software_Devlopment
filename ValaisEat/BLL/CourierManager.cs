@@ -31,9 +31,9 @@ namespace BLL
             return courierDB.UpdateCourier(courier);
         }
         
-        public int DeleteCourier(Courier courier)
+        public int DeleteCourier(int idCourier)
         {
-            return courierDB.DeleteCourier(courier);
+            return courierDB.DeleteCourier(idCourier);
         }
 
     }
