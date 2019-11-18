@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DTO
 {
@@ -8,8 +9,13 @@ namespace DTO
         public string Name { get; set; }
         public string Firstname { get; set; }
         public string Adress { get; set; }
+        [Phone]
         public string Telephon { get; set; }
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
+        [Required]
+        [StringLength(12)]
         public string Password { get; set; }
         public DateTime Date { get; set; }
         public int IdCities { get; set; }
