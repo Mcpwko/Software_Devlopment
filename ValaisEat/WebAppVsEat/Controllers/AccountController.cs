@@ -4,11 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BLL;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAppVsEat.Controllers
 {
     public class AccountController : Controller
     {
+
+        private IConfiguration Configuration { get; }
+
+        public AccountController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         // GET: Account
         public ActionResult Index()
         {
@@ -42,10 +51,12 @@ namespace WebAppVsEat.Controllers
         // POST: Account/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(DTO.User u)
         {
             try
             {
+                UserManager um = new UserManager(Configuration);
+                um.AddUser(u);
                 // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));

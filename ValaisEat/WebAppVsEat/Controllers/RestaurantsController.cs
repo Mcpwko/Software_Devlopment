@@ -6,11 +6,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppVsEat.Models;
+using BLL;
+using Microsoft.Extensions.Configuration;
 
 namespace WebAppVsEat.Controllers
 {
     public class RestaurantsController : Controller
     {
+        private IConfiguration Configuration { get; }
+
+        public RestaurantsController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         // GET: Restaurants
         public ActionResult Index()
         {
@@ -19,39 +27,23 @@ namespace WebAppVsEat.Controllers
 
         public ActionResult GetRestaurants()
         {
-            var restaurantlist = new List<ListResto>
-            {
-                new ListResto(){ restaurants = new List<Restaurant> {
-                    new Restaurant() {Name = "JoPizza", Adress = "Chemin des Collines 2" },
-                    new Restaurant() {Name="Banana",Adress="Rue des amandiers"}
-                    }
-                }
-            };
+            RestaurantManager rManager = new RestaurantManager(Configuration);
+            var restaurantlist = rManager.GetRestaurants();
             return View(restaurantlist);
         }
 
         // GET: Restaurants/Details/5
         public ActionResult Details(int id)
         {
-            var restaurants = new List<SelectListItem>
-            {
-                new SelectListItem {Value="1", Text="JOPIZZA"},
-                new SelectListItem {Value="2", Text="BananRestaurant"},
-                new SelectListItem {Value="3", Text="ChineseFood"}
-            };
-            ViewBag.Restaurants = restaurants;
-            ViewBag.Selected = 3;
+            DishManager rManager = new DishManager(Configuration);
+            var dishes = rManager.GetDishes(id);
 
-            return View();
+            
+
+            return View(dishes);
         }
 
-        public ActionResult Details(DTO.Restaurant r)
-        {
-            DTO.Restaurant restaurant = r;
-
-            return View();
-        }
-
+       
         // GET: Restaurants/Create
         public ActionResult Create()
         {
@@ -78,11 +70,21 @@ namespace WebAppVsEat.Controllers
         // GET: Restaurants/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            RestaurantManager rManager = new RestaurantManager(Configuration);
+            var restaurant = rManager.GetRestaurant(id);
+            return View(restaurant);
+        }
+        [HttpPost]
+        public ActionResult Edit (DTO.Restaurant r)
+        {
+            RestaurantManager rManager = new RestaurantManager(Configuration);
+            rManager.UpdateRestaurant(r);
+            return RedirectToAction(nameof(GetRestaurants));
+
         }
 
         // POST: Restaurants/Edit/5
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
@@ -96,7 +98,7 @@ namespace WebAppVsEat.Controllers
             {
                 return View();
             }
-        }
+        }*/
 
         // GET: Restaurants/Delete/5
         public ActionResult Delete(int id)

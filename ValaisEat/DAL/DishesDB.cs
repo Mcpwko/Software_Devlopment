@@ -42,7 +42,7 @@ namespace DAL
                             dish.IdDishes = (int)dr["IdDishes"];
                             dish.Name = (string)dr["Name"];
                             dish.Description = (string)dr["Description"];
-                            dish.Price = (float)dr["Price"];
+                            dish.Price = (double)dr["Price"];
                             dish.Title = (string)dr["Title"];
                             dish.Status = (string)dr["Status"];
                             dish.IdRestaurants = (int)dr["IdRestaurants"];
@@ -65,7 +65,7 @@ namespace DAL
 
 
 
-        public List<Dishes> GetDishes()
+        public List<Dishes> GetDishes(int idRestaurant)
         {
             List<Dishes> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -74,8 +74,9 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Dishes";
+                    string query = "SELECT * FROM Dishes WHERE IdRestaurants =@idRestaurant";
                     SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idRestaurant", idRestaurant);
 
                     cn.Open();
 
@@ -91,7 +92,7 @@ namespace DAL
                             dish.IdDishes = (int)dr["IdDishes"];
                             dish.Name = (string)dr["Name"];
                             dish.Description = (string)dr["Description"];
-                            dish.Price = (float)dr["Price"];
+                            dish.Price = (double)dr["Price"];
                             dish.Title = (string)dr["Title"];
                             dish.Status = (string)dr["Status"];
                             dish.IdRestaurants = (int)dr["IDRestaurants"];

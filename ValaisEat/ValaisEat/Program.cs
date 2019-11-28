@@ -25,6 +25,15 @@ namespace ConsoleApp
                 Console.WriteLine(restaurant.ToString());
             }
 
+            var dishManager = new DishManager(Configuration);
+
+            var dishes = dishManager.GetDishes(2);
+
+            foreach (var dish in dishes)
+            {
+                Console.WriteLine(dish.ToString());
+            }
+
 
         }
     }

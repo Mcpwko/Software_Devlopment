@@ -18,9 +18,9 @@ namespace BLL
 
 
 
-        public List<Dishes> GetDishes()
+        public List<Dishes> GetDishes(int idRestaurant)
         {
-            return dishDB.GetDishes();
+            return dishDB.GetDishes(idRestaurant);
         }
 
         public Dishes GetDish(int id)

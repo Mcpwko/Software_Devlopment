@@ -8,7 +8,7 @@ namespace BLL
     {
         List<User> GetUsers();
         User GetUser(int idUser);
-        Restaurant AddUser(User user);
+        User AddUser(User user);
         int UpdateUser(User user);
         int DeleteUser(int idUser);
     }
