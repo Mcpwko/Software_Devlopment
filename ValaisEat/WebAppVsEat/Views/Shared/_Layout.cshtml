@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebAppVsEat</title>
+    <title>@ViewData["Title"] - VsEat</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -15,6 +15,34 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
+    <style>
+
+        .topnav {
+            overflow: hidden;
+            background-color: #6d1515;
+        }
+
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+        .topnav-right {
+            float: right;
+        }
+    </style>
+
+
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -26,28 +54,65 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WebAppVsEat</a>
+
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand"><img src="~/images/Logo_blanc.png" width="130" height="50" alt=""></a>
+
+                
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Restaurants" asp-action="GetRestaurants">Restaurants</a></li>
-                </ul>
+            <div class="topnav topnav-right">
+               <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+               <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+               <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+               <a asp-area="" asp-controller="Restaurants" asp-action="GetRestaurants">Restaurants</a>
             </div>
         </div>
     </nav>
 
+
     <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content">
+    
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2019 - WebAppVsEat</p>
+        <!-- Footer -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- Footer Menu -->
+        <footer id="footer">
+
+            <!-- Copyright Section -->
+            <div class="copyright">
+                <p>©  All rights reserved | MCPJACK</p>
+
+                <ul class="contact">
+                    <li>
+                        <i class="fa fa-twitter"></i>
+                    </li>
+
+                    <li>
+                        <i2 class="fa fa-snapchat"></i2>
+                    </li>
+
+                    <li>
+                        <i class="fa fa-linkedin"></i>
+                    </li>
+                </ul>
+            </div>
         </footer>
-    </div>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
