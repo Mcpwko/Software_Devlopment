@@ -12,10 +12,21 @@ html {
 
 
 
+body, html {
+    height: 100%;
+    margin: 0;
+}
 
-
-
-
+.bg {
+    /* The image used */
+    background-image: url("../../../../images/IndexPizza.jpg");
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 
 
@@ -33,13 +44,7 @@ html {
 /**********************************/
 
 /*** Adding Styles to Company Details ***/
-.company-details {
-    overflow: hidden;
-    padding: 3em 0em;
-    background: #6d1515;
-    text-align: center;
-    margin-top: 5em;
-}
+
 
 #footer #col1,
 #footer #col2,

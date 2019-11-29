@@ -46,7 +46,7 @@
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container ">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -55,17 +55,20 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="brand"><img src="~/images/Logo_blanc.png" width="130" height="50" alt=""></a>
 
-                
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="brand"><img src="~/images/Logo_blanc.png" width="130" height="50" alt=""></a>
+                </div>
+
+
+                <div class="topnav topnav-right">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <a asp-area="" asp-controller="Home" asp-action="About">About</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                    <a asp-area="" asp-controller="Restaurants" asp-action="GetRestaurants">Restaurants</a>
+                    <a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </div>
             </div>
-            <div class="topnav topnav-right">
-               <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-               <a asp-area="" asp-controller="Home" asp-action="About">About</a>
-               <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-               <a asp-area="" asp-controller="Restaurants" asp-action="GetRestaurants">Restaurants</a>
-            </div>
-        </div>
     </nav>
 
 
@@ -73,11 +76,11 @@
 
     
         @RenderBody()
-        <hr />
+        
         <!-- Footer -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- Footer Menu -->
-        <footer id="footer">
+        <footer class="bottom"id="footer">
 
             <!-- Copyright Section -->
             <div class="copyright">
@@ -95,6 +98,7 @@
                     <li>
                         <i class="fa fa-linkedin"></i>
                     </li>
+                    
                 </ul>
             </div>
         </footer>
