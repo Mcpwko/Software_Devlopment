@@ -41,7 +41,7 @@ namespace WebAppVsEat.Controllers
         {
             try
             {
-
+                
                 UserManager.AddUser(user);
 
                 return RedirectToAction(nameof(Index));

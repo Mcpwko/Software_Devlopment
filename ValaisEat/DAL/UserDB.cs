@@ -26,7 +26,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM User WHERE IdUser = @id";
+                    string query = "SELECT * FROM [User] WHERE IdUser = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", idUser);
 
@@ -47,7 +47,8 @@ namespace DAL
                             user.Email = (string)dr["Email"];
                             user.Password = (string)dr["Password"];
                             user.Date = (DateTime)dr["Date"];
-                            user.IdCity = (int)dr["IdCiy"];
+                            user.IdCity = (int)dr["IdCity"];
+
 
 
                         }
@@ -75,7 +76,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM User";
+                    string query = "SELECT * FROM [User]";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -122,7 +123,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into User(Name,Firstname,Adress,Telephon,Email,Password,Date,IdCities) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCity);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into [User](Name,Firstname,Adress,Telephon,Email,Password,Date,IdCities) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCity);SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
@@ -163,7 +164,7 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "UPDATE User SET Name=@Name,Firstname=@Firstname,Adress=@Adress,Telephon=@Telephon,Email=@Email,Password=@Password,IdCity=@IdCity WHERE IdUser=@IdUser";
+                    string query = "UPDATE [User] SET Name=@Name,Firstname=@Firstname,Adress=@Adress,Telephon=@Telephon,Email=@Email,Password=@Password,IdCity=@IdCity WHERE IdUser=@IdUser";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 

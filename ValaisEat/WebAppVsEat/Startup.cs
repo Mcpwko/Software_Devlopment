@@ -40,8 +40,11 @@ namespace WebAppVsEat
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
          options =>
          {
-             options.LoginPath = new PathString("/Account/login");
-             options.AccessDeniedPath = new PathString("/auth/denied");
+             options.Cookie.HttpOnly = true;
+             options.SlidingExpiration = true;
+             options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+             options.LoginPath = new PathString("/Login/login");
+             options.AccessDeniedPath = new PathString("/Home/Index");
          });
 
 
@@ -52,6 +55,8 @@ namespace WebAppVsEat
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
         }
+
+
 
 
 

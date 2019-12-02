@@ -15,7 +15,10 @@ namespace BLL
         {
             userDB = new UserDB(configuration);
         }
-
+        public List<User> GetUsers()
+        {
+            return userDB.GetUsers();
+        }
         public User GetUser(int id)
         {
             return userDB.GetUser(id);
@@ -31,10 +34,18 @@ namespace BLL
 
         public bool VerificateAuthentification(string username, string password)
         {
+            
+            var users = GetUsers();
 
-            string motDePasse = password;
-            return DTO.User.FirstOrDefault(u => u.Prenom == nom && u.MotDePasse == motDePasseEncode);
+            foreach (var user in users)
+            {
+                if (user.Email.Equals(username) && user.Password.Equals(password))
+                {
+                    return true;
+                }
+            }
 
+            return false;
         }
 
     }

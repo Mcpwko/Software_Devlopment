@@ -34,6 +34,20 @@ namespace ConsoleApp
                 Console.WriteLine(dish.ToString());
             }
 
+            var userManager = new UserManager(Configuration);
+            var animal = userManager.GetUser(1);
+
+            Console.WriteLine(animal.ToString());
+
+            /**var userManager = new UserManager(Configuration);
+
+            var users = userManager.GetUsers();
+
+            foreach (var user in users)
+            {
+                Console.WriteLine(user.ToString());
+            }*/
+
 
         }
     }

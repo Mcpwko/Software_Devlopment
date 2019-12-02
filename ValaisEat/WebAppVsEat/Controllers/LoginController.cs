@@ -1,17 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using BLL;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAppVsEat.Models;
 
 namespace WebAppVsEat.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
-        public ActionResult Index()
+        
+        private IUserManager UserManager { get; }
+        public LoginController(IUserManager userManager)
         {
+            UserManager = userManager;
+        }
+
+        // GET: Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Login login1)
+        {
+            string username = login1.username;
+            string password = login1.password;
+
+            //Check the user name and password  
+            //Here can be implemented checking logic from the database  
+            
+            
+            if (UserManager.VerificateAuthentification(username,password))
+            {
+
+                //Create the identity for the user  
+                var identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, username)
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                
+
+                var principal = new ClaimsPrincipal(identity);
+
+                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError("password", "Please check your email or password and try again !");
             return View();
         }
 
@@ -36,7 +80,7 @@ namespace WebAppVsEat.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(HomeController.Index));
             }
             catch
             {
@@ -59,7 +103,7 @@ namespace WebAppVsEat.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(HomeController.Index));
             }
             catch
             {
@@ -82,7 +126,7 @@ namespace WebAppVsEat.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(HomeController.Index));
             }
             catch
             {
