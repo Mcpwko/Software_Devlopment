@@ -1,12 +1,13 @@
 ﻿using DTO;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Configuration;
 
-namespace BLL
+namespace DAL
 {
-    public interface IDishManager
+    public interface IDishDB
     {
+
         List<Dish> GetDishes(int idRestaurant);
         Dish GetDish(int id);
     }

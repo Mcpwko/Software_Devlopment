@@ -4,16 +4,16 @@ using System.Text;
 
 namespace DTO
 {
-    public class Salaries
+    public class Salary
     {
-        public int IdSalaries { get; set; }
+        public int IdSalary { get; set; }
         public float Tips { get; set; }
         public int IdCourier { get; set; }
 
 
         public override string ToString()
         {
-            return $"{IdSalaries}|{Tips}|{IdCourier}";
+            return $"{IdSalary}|{Tips}|{IdCourier}";
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DTO.Dishes>
+﻿@model IEnumerable<DTO.Dish>
 
 @{
     ViewData["Title"] = "Details";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdDishes)
+                @Html.DisplayNameFor(model => model.IdDish)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdRestaurants)
+                @Html.DisplayNameFor(model => model.IdRestaurant)
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdDishes)
+                @Html.DisplayFor(modelItem => item.IdDish)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -58,7 +58,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdRestaurants)
+                @Html.DisplayFor(modelItem => item.IdRestaurant)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

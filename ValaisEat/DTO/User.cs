@@ -18,12 +18,12 @@ namespace DTO
         [StringLength(12)]
         public string Password { get; set; }
         public DateTime Date { get; set; }
-        public int IdCities { get; set; }
+        public int IdCity { get; set; }
 
 
         public override string ToString()
         {
-            return $"{IdUser}|{Name}|{Firstname}|{Adress}|{Telephon}|{Email}|{Password}|{Date}|{IdCities}";
+            return $"{IdUser}|{Name}|{Firstname}|{Adress}|{Telephon}|{Email}|{Password}|{Date}|{IdCity}";
         }
     }
 }

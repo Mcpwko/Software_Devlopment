@@ -40,7 +40,7 @@ namespace DAL
                             order = new Order_Dishes();
 
                             order.IdOrder = (int)dr["IdOrder"];
-                            order.IdDishes = (int)dr["IdDishes"];
+                            order.IdDish = (int)dr["IdDishes"];
                             order.Quantity = (int)dr["Quantity"];
 
                         }
@@ -74,7 +74,7 @@ namespace DAL
 
 
                     cmd.Parameters.AddWithValue("@Status", order.Quantity);
-                    cmd.Parameters.AddWithValue("@Date", order.IdDishes);
+                    cmd.Parameters.AddWithValue("@Date", order.IdDish);
                     cmd.Parameters.AddWithValue("@ShippingDate", order.IdOrder);
 
 
@@ -108,7 +108,7 @@ namespace DAL
 
 
                     cmd.Parameters.AddWithValue("@IdOrder", order.IdOrder);
-                    cmd.Parameters.AddWithValue("@Status", order.IdDishes);
+                    cmd.Parameters.AddWithValue("@Status", order.IdDish);
                     cmd.Parameters.AddWithValue("@Date", order.Quantity);
 
                     cn.Open();

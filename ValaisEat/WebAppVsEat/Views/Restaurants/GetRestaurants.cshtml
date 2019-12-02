@@ -1,37 +1,40 @@
-﻿@model IEnumerable<DTO.Restaurant>
+﻿
+
+
+@model IEnumerable<DTO.Restaurant>
 
 @{
     ViewData["Title"] = "GetRestaurants";
 }
 
-<h2>GetRestaurants</h2>
+<h2>Restaurants</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdRestaurants)
+<table class="table"style="background-color:lightgrey" >
+    <thead >
+        <tr style="background-color:#3d3a3a; color:white;" >
+            <th >
+                @Html.DisplayNameFor(model => model.IdRestaurant)
             </th>
-            <th>
+            <th style="background-color:#3d3a3a; color:white;">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th style="background-color:#3d3a3a ; color:white;">
                 @Html.DisplayNameFor(model => model.Openingdate)
             </th>
-            <th>
+            <th style="background-color:#3d3a3a ; color:white;">
                 @Html.DisplayNameFor(model => model.Schedule)
             </th>
-            <th>
+            <th style="background-color:#3d3a3a ; color:white;">
                 @Html.DisplayNameFor(model => model.Type)
             </th>
-            <th>
+            <th style="background-color:#3d3a3a ; color:white;">
                 @Html.DisplayNameFor(model => model.Adress)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCities)
+            <th style="background-color:#3d3a3a ; color:white;">
+                @Html.DisplayNameFor(model => model.IdCity)
             </th>
             <th></th>
         </tr>
@@ -40,7 +43,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdRestaurants)
+                @Html.DisplayFor(modelItem => item.IdRestaurant)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -58,11 +61,11 @@
                 @Html.DisplayFor(modelItem => item.Adress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCities)
+                @Html.DisplayFor(modelItem => item.IdCity)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.IdRestaurants}) |
-                @Html.ActionLink("Details", "Details", new { id=item.IdRestaurants }) |
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdRestaurant}) |
+                @Html.ActionLink("Details", "Details", new { id=item.IdRestaurant }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>

@@ -18,20 +18,20 @@ namespace BLL
 
 
 
-        public List<Salaries> GetSalaries()
+        public List<Salary> GetSalaries()
         {
             return salaryDB.GetSalaries();
         }
 
-        public Salaries GetSalary(int id)
+        public Salary GetSalary(int id)
         {
             return salaryDB.GetSalary(id);
         }
-        public Salaries AddSalary(Salaries salary)
+        public Salary AddSalary(Salary salary)
         {
             return salaryDB.AddSalary(salary);
         }
-        public int UpdateCity(Salaries salary)
+        public int UpdateCity(Salary salary)
         {
             return salaryDB.UpdateSalary(salary);
         }

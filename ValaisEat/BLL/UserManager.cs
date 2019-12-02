@@ -28,14 +28,13 @@ namespace BLL
         {
             return userDB.UpdateUser(user);
         }
-        public int DeleteUser(int idUser)
-        {
-            return userDB.DeleteUser(idUser);
-        }
 
-        public List<User> GetUsers()
+        public bool VerificateAuthentification(string username, string password)
         {
-            throw new NotImplementedException();
+
+            string motDePasse = password;
+            return DTO.User.FirstOrDefault(u => u.Prenom == nom && u.MotDePasse == motDePasseEncode);
+
         }
 
     }

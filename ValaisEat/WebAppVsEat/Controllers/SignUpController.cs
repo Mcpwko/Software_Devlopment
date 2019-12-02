@@ -2,69 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using BLL;
-using Microsoft.Extensions.Configuration;
 
 namespace WebAppVsEat.Controllers
 {
-    public class AccountController : Controller
+    public class SignUpController : Controller
     {
-
-        private IConfiguration Configuration { get; }
-
-        public AccountController(IConfiguration configuration)
+        private IUserManager UserManager { get; }
+        public SignUpController(IUserManager userManager)
         {
-            Configuration = configuration;
+            UserManager = userManager;
         }
-        // GET: Account
+
+        // GET: SignUp
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Account/Details/5
+        // GET: SignUp/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Details(DTO.User u)
-        {
-            DTO.User user = u;
-            return View();
-        }
 
-        // GET: Account/Create
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-
+        // GET: SignUp/SignUp
         public ActionResult SignUp()
         {
             return View();
         }
 
-        public ActionResult Login()
-        {
-            /**HttpContext.Session.SetString("Email",Username);*/
-            return View();
-        }
-
-        // POST: Account/Create
+        // POST: SignUp/SignUp
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DTO.User u)
+        public ActionResult SignUp(DTO.User user)
         {
             try
             {
-                UserManager um = new UserManager(Configuration);
-                um.AddUser(u);
-                // TODO: Add insert logic here
+
+                UserManager.AddUser(user);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,13 +52,13 @@ namespace WebAppVsEat.Controllers
             }
         }
 
-        // GET: Account/Edit/5
+        // GET: SignUp/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Account/Edit/5
+        // POST: SignUp/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -97,13 +75,13 @@ namespace WebAppVsEat.Controllers
             }
         }
 
-        // GET: Account/Delete/5
+        // GET: SignUp/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Account/Delete/5
+        // POST: SignUp/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

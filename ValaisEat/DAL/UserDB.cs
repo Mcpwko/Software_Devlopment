@@ -9,17 +9,17 @@ namespace DAL
 {
     public class UserDB : IUserDB
     {
-        public IConfiguration Configuration { get; }
+        private string connectionString = null;
         public UserDB(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var config = configuration;
+            connectionString = config.GetConnectionString("DefaultConnection");
         }
 
 
         public User GetUser(int idUser)
         {
             User user = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
             try
@@ -47,7 +47,7 @@ namespace DAL
                             user.Email = (string)dr["Email"];
                             user.Password = (string)dr["Password"];
                             user.Date = (DateTime)dr["Date"];
-                            user.IdCities = (int)dr["IdCities"];
+                            user.IdCity = (int)dr["IdCiy"];
 
 
                         }
@@ -70,7 +70,6 @@ namespace DAL
         public List<User> GetUsers()
         {
             List<User> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
@@ -98,7 +97,7 @@ namespace DAL
                             user.Email = (string)dr["Email"];
                             user.Password = (string)dr["Password"];
                             user.Date = (DateTime)dr["Date"];
-                            user.IdCities = (int)dr["IdCities"];
+                            user.IdCity = (int)dr["IdCity"];
 
 
                             results.Add(user);
@@ -118,13 +117,12 @@ namespace DAL
         public User AddUser(User user)
         {
 
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into User(Name,Firstname,Adress,Telephon,Email,Password,Date,IdCities) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCities);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into User(Name,Firstname,Adress,Telephon,Email,Password,Date,IdCities) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCity);SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
@@ -136,7 +134,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@Email", user.Email);
                     cmd.Parameters.AddWithValue("@Password", user.Password);
                     cmd.Parameters.AddWithValue("@Date", user.Date);
-                    cmd.Parameters.AddWithValue("@IdCities", user.IdCities);
+                    cmd.Parameters.AddWithValue("@IdCity", user.IdCity);
 
 
                     cn.Open();
@@ -158,7 +156,6 @@ namespace DAL
 
         public int UpdateUser(User user)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
 
             try
@@ -166,7 +163,7 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "UPDATE User SET Name=@Name,Firstname=@Firstname,Adress=@Adress,Telephon=@Telephon,Email=@Email,Password=@Password,IdCities=@IdCities WHERE IdUser=@IdUser";
+                    string query = "UPDATE User SET Name=@Name,Firstname=@Firstname,Adress=@Adress,Telephon=@Telephon,Email=@Email,Password=@Password,IdCity=@IdCity WHERE IdUser=@IdUser";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
@@ -178,7 +175,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@Email", user.Email);
                     cmd.Parameters.AddWithValue("@Password", user.Password);
                     cmd.Parameters.AddWithValue("@Date", user.Date);
-                    cmd.Parameters.AddWithValue("@IdCities", user.IdCities);
+                    cmd.Parameters.AddWithValue("@IdCity", user.IdCity);
 
 
                     cn.Open();
@@ -196,32 +193,5 @@ namespace DAL
         }
 
 
-        public int DeleteUser(int idUser)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            int result = 0;
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-
-                    string query = "DELETE FROM User WHERE IdUser=@IdUser";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdUser", idUser);
-
-                    cn.Open();
-
-                    result = cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-            return result;
-
-        }
     }
 }

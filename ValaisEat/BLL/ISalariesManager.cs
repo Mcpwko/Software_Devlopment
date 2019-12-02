@@ -7,10 +7,10 @@ namespace BLL
 {
     public interface ISalariesManager
     {
-        List<Salaries> GetSalaries();
-        Salaries GetSalary(int id);
-        Salaries AddSalary(Salaries salary);
-        int UpdateSalary(Salaries salary);
+        List<Salary> GetSalaries();
+        Salary GetSalary(int id);
+        Salary AddSalary(Salary salary);
+        int UpdateSalary(Salary salary);
         int DeleteSalary(int idSalary);
     }
 }

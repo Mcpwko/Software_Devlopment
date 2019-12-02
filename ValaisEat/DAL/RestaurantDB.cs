@@ -9,24 +9,25 @@ namespace DAL
 {
     public class RestaurantDB : IRestaurantDB
     {
-        public IConfiguration Configuration { get; }
+        private string connectionString = null;
         public RestaurantDB(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var config = configuration;
+            connectionString = config.GetConnectionString("DefaultConnection");
         }
 
 
         public Restaurant GetRestaurant(int id)
         {
             Restaurant restaurant = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            
 
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Restaurants WHERE IdRestaurants = @id";
+                    string query = "SELECT * FROM Restaurant WHERE IdRestaurant = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -39,13 +40,13 @@ namespace DAL
 
                             restaurant = new Restaurant();
 
-                            restaurant.IdRestaurants = (int)dr["IdRestaurants"];
+                            restaurant.IdRestaurant = (int)dr["IdRestaurant"];
                             restaurant.Name = (string)dr["Name"];
                             restaurant.Openingdate = (DateTime)dr["OpeningDate"];
                             restaurant.Schedule = (string)dr["Schedule"];
                             restaurant.Type = (string)dr["Type"];
                             restaurant.Adress = (string)dr["Adress"];
-                            restaurant.IdCities = (int)dr["IdCities"];
+                            restaurant.IdCity = (int)dr["IdCity"];
 
 
                         }
@@ -68,13 +69,12 @@ namespace DAL
         public List<Restaurant> GetRestaurants()
         {
             List<Restaurant> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Restaurants";
+                    string query = "SELECT * FROM Restaurant";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -88,13 +88,13 @@ namespace DAL
 
                             Restaurant restaurant = new Restaurant();
 
-                            restaurant.IdRestaurants = (int)dr["IdRestaurants"];
+                            restaurant.IdRestaurant = (int)dr["IdRestaurant"];
                             restaurant.Name = (string)dr["Name"];
                             restaurant.Openingdate = (DateTime)dr["OpeningDate"];
                             restaurant.Schedule = (string)dr["Schedule"];
                             restaurant.Type = (string)dr["Type"];
                             restaurant.Adress = (string)dr["Adress"];
-                            restaurant.IdCities = (int)dr["IdCities"];
+                            restaurant.IdCity = (int)dr["IdCity"];
 
 
                             results.Add(restaurant);
@@ -108,112 +108,6 @@ namespace DAL
             }
 
             return results;
-        }
-
-
-        public Restaurant AddRestaurant(Restaurant restaurant)
-        {
-
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-                    string query = "INSERT into Restaurants(Name,Openingdate,Schedule,Type,Adress,IdCities) VALUES(@Name,@Openingdate,@Schedule,@Type,@Adress,@IdCities);SELECT SCOPE_IDENTITY()";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-
-
-
-                    cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                    cmd.Parameters.AddWithValue("@Openingdate", restaurant.Openingdate);
-                    cmd.Parameters.AddWithValue("@Schedule", restaurant.Schedule);
-                    cmd.Parameters.AddWithValue("@Type", restaurant.Type);
-                    cmd.Parameters.AddWithValue("@Adress", restaurant.Adress);
-                    cmd.Parameters.AddWithValue("@IdCities", restaurant.IdCities);
-  
-
-                    cn.Open();
-
-                    restaurant.IdRestaurants = Convert.ToInt32(cmd.ExecuteScalar());
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-            return restaurant;
-
-
-
-        }
-
-
-        public int UpdateRestaurant(Restaurant restaurant)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            int result = 0;
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-
-                    string query = "UPDATE Restaurants SET Name=@Name,Openingdate=@Openingdate,Schedule=@Schedule,Type=@Type,Adress=@Adress,IdCities=@IdCities WHERE IdRestaurants=@IdRestaurants";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-
-
-                    cmd.Parameters.AddWithValue("@IdRestaurants", restaurant.IdRestaurants);
-                    cmd.Parameters.AddWithValue("@Name", restaurant.Name);
-                    cmd.Parameters.AddWithValue("@Openingdate", restaurant.Openingdate);
-                    cmd.Parameters.AddWithValue("@Schedule", restaurant.Schedule);
-                    cmd.Parameters.AddWithValue("@Type", restaurant.Type);
-                    cmd.Parameters.AddWithValue("@Adress", restaurant.Adress);
-                    cmd.Parameters.AddWithValue("@IdCities", restaurant.IdCities);
-           
-
-                    cn.Open();
-
-                    result = cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-            return result;
-
-        }
-
-
-        public int DeleteRestaurant(int idRestaurant)
-        {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            int result = 0;
-
-            try
-            {
-                using (SqlConnection cn = new SqlConnection(connectionString))
-                {
-
-                    string query = "DELETE FROM Restaurants WHERE IdRestaurants=@IdRestaurants";
-                    SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@IdRestaurants", idRestaurant);
-
-                    cn.Open();
-
-                    result = cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
-            return result;
-
         }
 
     }

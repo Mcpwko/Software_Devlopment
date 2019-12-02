@@ -4,66 +4,36 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using BLL;
-using Microsoft.Extensions.Configuration;
 
 namespace WebAppVsEat.Controllers
 {
-    public class AccountController : Controller
+    public class LoginController : Controller
     {
-
-        private IConfiguration Configuration { get; }
-
-        public AccountController(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-        // GET: Account
+        // GET: Login
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Account/Details/5
+        // GET: Login/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
+
+        // GET: Login/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Login/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details(DTO.User u)
-        {
-            DTO.User user = u;
-            return View();
-        }
-
-        // GET: Account/Create
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-
-        public ActionResult SignUp()
-        {
-            return View();
-        }
-
-        public ActionResult Login()
-        {
-            /**HttpContext.Session.SetString("Email",Username);*/
-            return View();
-        }
-
-        // POST: Account/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(DTO.User u)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
-                UserManager um = new UserManager(Configuration);
-                um.AddUser(u);
                 // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));
@@ -74,13 +44,13 @@ namespace WebAppVsEat.Controllers
             }
         }
 
-        // GET: Account/Edit/5
+        // GET: Login/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Account/Edit/5
+        // POST: Login/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -97,13 +67,13 @@ namespace WebAppVsEat.Controllers
             }
         }
 
-        // GET: Account/Delete/5
+        // GET: Login/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Account/Delete/5
+        // POST: Login/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

@@ -10,10 +10,10 @@ namespace DAL
     {
         IConfiguration Configuration { get; }
 
-        List<Salaries> GetSalaries();
-        Salaries GetSalary(int id);
-        Salaries AddSalary(Salaries salaires);
-        int UpdateSalary(Salaries salaires);
+        List<Salary> GetSalaries();
+        Salary GetSalary(int id);
+        Salary AddSalary(Salary salaires);
+        int UpdateSalary(Salary salaires);
         int DeleteSalary(int iDSalaries);
     }
 }

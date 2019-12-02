@@ -16,9 +16,9 @@ namespace DAL
         }
 
 
-        public Salaries GetSalary(int IdSalaries)
+        public Salary GetSalary(int IdSalaries)
         {
-            Salaries salary = null;
+            Salary salary = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
@@ -37,9 +37,9 @@ namespace DAL
                         if (dr.Read())
                         {
 
-                            salary = new Salaries();
+                            salary = new Salary();
 
-                            salary.IdSalaries = (int)dr["IdSalaries"];
+                            salary.IdSalary = (int)dr["IdSalaries"];
                             salary.Tips = (float)dr["Tips"];
                             salary.IdCourier = (int)dr["IDCourier"];
 
@@ -61,9 +61,9 @@ namespace DAL
 
 
 
-        public List<Salaries> GetSalaries()
+        public List<Salary> GetSalaries()
         {
-            List<Salaries> results = null;
+            List<Salary> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
@@ -80,11 +80,11 @@ namespace DAL
                         while (dr.Read())
                         {
                             if (results == null)
-                                results = new List<Salaries>();
+                                results = new List<Salary>();
 
-                            Salaries salary = new Salaries();
+                            Salary salary = new Salary();
 
-                            salary.IdSalaries = (int)dr["IdSalaries"];
+                            salary.IdSalary = (int)dr["IdSalaries"];
                             salary.Tips = (float)dr["Tips"];
                             salary.IdCourier = (int)dr["IdCourier"];
 
@@ -103,7 +103,7 @@ namespace DAL
         }
 
 
-        public Salaries AddSalary(Salaries salary)
+        public Salary AddSalary(Salary salary)
         {
 
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -121,7 +121,7 @@ namespace DAL
 
                     cn.Open();
 
-                    salary.IdSalaries = Convert.ToInt32(cmd.ExecuteScalar());
+                    salary.IdSalary = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception e)
@@ -136,7 +136,7 @@ namespace DAL
         }
 
 
-        public int UpdateSalary(Salaries salary)
+        public int UpdateSalary(Salary salary)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
@@ -150,7 +150,7 @@ namespace DAL
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
-                    cmd.Parameters.AddWithValue("@IdSalaries", salary.IdSalaries);
+                    cmd.Parameters.AddWithValue("@IdSalaries", salary.IdSalary);
                     cmd.Parameters.AddWithValue("@Tips", salary.Tips);
                     cmd.Parameters.AddWithValue("@IdCourier", salary.IdCourier);
 

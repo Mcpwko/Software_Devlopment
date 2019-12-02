@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppVsEat.Models;
 using BLL;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppVsEat.Controllers
 {
+    
     public class RestaurantsController : Controller
     {
         private IConfiguration Configuration { get; }
@@ -24,7 +26,7 @@ namespace WebAppVsEat.Controllers
         {
             return View();
         }
-
+        [Authorize]
         public ActionResult GetRestaurants()
         {
             RestaurantManager rManager = new RestaurantManager(Configuration);
@@ -68,7 +70,7 @@ namespace WebAppVsEat.Controllers
         }
 
         // GET: Restaurants/Edit/5
-        public ActionResult Edit(int id)
+        /**public ActionResult Edit(int id)
         {
             RestaurantManager rManager = new RestaurantManager(Configuration);
             var restaurant = rManager.GetRestaurant(id);
@@ -81,7 +83,7 @@ namespace WebAppVsEat.Controllers
             rManager.UpdateRestaurant(r);
             return RedirectToAction(nameof(GetRestaurants));
 
-        }
+        }*/
 
         // POST: Restaurants/Edit/5
         /*[HttpPost]
