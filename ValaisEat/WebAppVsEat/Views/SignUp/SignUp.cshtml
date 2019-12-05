@@ -153,7 +153,7 @@
                 <select asp-for="IdCity" class="form-control" asp-items="@(new SelectList(ViewBag.City, "Value", "Text",ViewBag.Selected))" style="border-radius:initial; background-color:#f2f2f2; height:50px;"></select>
                 <span asp-validation-for="IdCity" class="text-danger"></span>
             </div>
-
+             
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-mobile-phone icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
                 <input asp-for="Telephon" type="tel" placeholder="Telephon" />
