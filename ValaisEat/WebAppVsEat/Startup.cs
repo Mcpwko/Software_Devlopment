@@ -48,7 +48,8 @@ namespace WebAppVsEat
          });
 
 
-
+            services.AddScoped<ICityManager, CityManager>();
+            services.AddScoped<ICityDB, CityDB>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserDB, UserDB>();
 

@@ -39,14 +39,32 @@ namespace ConsoleApp
 
             Console.WriteLine(animal.ToString());
 
-            /**var userManager = new UserManager(Configuration);
 
-            var users = userManager.GetUsers();
 
-            foreach (var user in users)
+            var cityManager = new CityManager(Configuration);
+
+            var cities = cityManager.GetCities();
+
+            foreach (var city in cities)
             {
-                Console.WriteLine(user.ToString());
-            }*/
+                Console.WriteLine(city.ToString());
+            }
+
+
+            var user2 = new User();
+
+            user2.Name = "Kevin";
+            user2.Firstname = "Coppey";
+            user2.Adress = "Chemin des Etriettes 51";
+            user2.Telephon = "025 423 23 11";
+            user2.Email = "kevin@hes.ch";
+            user2.Password = "Client2";
+            user2.Date = DateTime.Today;
+            user2.IdCity = 3;
+
+            userManager.AddUser(user2);
+
+            
 
 
         }

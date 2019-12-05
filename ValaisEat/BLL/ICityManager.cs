@@ -5,12 +5,9 @@ using System.Text;
 
 namespace BLL
 {
-    public interface ICitiesManager
+    public interface ICityManager
     {
         List<City> GetCities();
         City GetCity(int id);
-        City AddCity(City city);
-        int UpdateCity(City city);
-        int DeleteCity(int idCity);
     }
 }

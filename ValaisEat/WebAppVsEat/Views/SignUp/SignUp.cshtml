@@ -1,4 +1,4 @@
-﻿@model UserModel
+﻿@model DTO.User
 
 @{
     ViewData["Title"] = "Sign Up";
@@ -115,6 +115,12 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+    button:disabled,
+    button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
 </style>
 
 
@@ -124,52 +130,54 @@
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-user icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="user.Name" style="margin-right:10px" type="text" placeholder="Name" name="usrnm">
-                <span asp-validation-for="user.Name" class="text-danger"></span>
-                <input asp-for="user.Firstname" type="text" placeholder="Firstname" />
-                <span asp-validation-for="user.Firstname" class="text-danger"></span>
+                <input asp-for="Name" style="margin-right:10px" type="text" placeholder="Name" name="usrnm">
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <input asp-for="Firstname" type="text" placeholder="Firstname" />
+                <span asp-validation-for="Firstname" class="text-danger"></span>
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-birthday-cake icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="user.Date" type="date" name="Birthdate">
-                <span asp-validation-for="user.Date" class="text-danger"></span>
+                <input asp-for="Date" type="date" name="Birthdate">
+                <span asp-validation-for="Date" class="text-danger"></span>
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-home icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="user.Adress" type="text" placeholder="Adress">
-                <span asp-validation-for="user.Adress" class="text-danger"></span>
+                <input asp-for="Adress" type="text" placeholder="Adress">
+                <span asp-validation-for="Adress" class="text-danger"></span>
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
-                <input asp-for="city.NPA" style="margin-right:10px" type="text" placeholder="NPA" name="usrnm">
-                <input asp-for="city.CityName" type="text" placeholder="City" />
-
+                <input style="margin-right:10px" type="text" placeholder="NPA" name="usrnm">
+                <select asp-for="IdCity" class="form-control" asp-items="@(new SelectList(ViewBag.City, "Value", "Text",ViewBag.Selected))" style="border-radius:initial; background-color:#f2f2f2; height:50px;"></select>
+                <span asp-validation-for="IdCity" class="text-danger"></span>
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-mobile-phone icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="user.Telephon" type="tel" placeholder="Telephon" />
-                <span asp-validation-for="user.Telephon" class="text-danger"></span>
+                <input asp-for="Telephon" type="tel" placeholder="Telephon" />
+                <span asp-validation-for="Telephon" class="text-danger"></span>
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-envelope icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="user.Email" type="email" placeholder="E-mail" />
-                <span asp-validation-for="user.Email" class="text-danger"></span>
+                <input asp-for="Email" type="email" placeholder="E-mail" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-key icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="user.Password" style="margin-right:10px" type="password" placeholder="Password" required />
-                <span asp-validation-for="user.Password" class="text-danger"></span>
-                <input type="password" placeholder="Repeat Password" required />
+                <input asp-for="Password" style="margin-right:10px" type="password" placeholder="Password" required name="password" id="password" onkeyup="check();" />
+                <span asp-validation-for="Password" class="text-danger"></span>
 
+                <input type="password" placeholder="Repeat Password" required name="confirm_password" id="confirm_password" onkeyup="check();" />
             </div>
+            <span id='message'></span>
 
-            <button>create</button>
-            <p class="message">Already registered? <a asp-area="" asp-controller="Account" asp-action="Login">Sign In</a></p>
+            <button name="submit" id="submit">create</button>
+            <p class="message">Already registered? <a asp-area="" asp-controller="Login" asp-action="Login">Sign In</a></p>
+
         </form>
     </div>
 </div>

@@ -123,7 +123,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into [User](Name,Firstname,Adress,Telephon,Email,Password,Date,IdCities) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCity);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into [User](Name,Firstname,Adress,Telephon,Email,Password,Date,IdCity) VALUES(@Name,@Firstname,@Adress,@Telephon,@Email,@Password,@Date,@IdCity); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
@@ -137,9 +137,7 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@Date", user.Date);
                     cmd.Parameters.AddWithValue("@IdCity", user.IdCity);
 
-
                     cn.Open();
-
                     user.IdUser = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }

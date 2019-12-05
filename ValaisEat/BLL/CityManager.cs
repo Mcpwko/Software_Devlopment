@@ -7,11 +7,11 @@ using System.Text;
 
 namespace BLL
 {
-    public class CitiesManager
+    public class CityManager : ICityManager
     {
             public ICityDB cityDB { get; }
 
-            public CitiesManager(IConfiguration configuration)
+            public CityManager(IConfiguration configuration)
             {
                 cityDB = new CityDB(configuration);
             }
