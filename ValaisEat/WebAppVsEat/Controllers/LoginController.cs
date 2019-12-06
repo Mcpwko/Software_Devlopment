@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL;
+using DTO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -16,9 +17,11 @@ namespace WebAppVsEat.Controllers
     {
         
         private IUserManager UserManager { get; }
-        public LoginController(IUserManager userManager)
+        private ICustomerManager CustomerManager { get; }
+        public LoginController(IUserManager userManager,ICustomerManager customerManager)
         {
             UserManager = userManager;
+            CustomerManager = customerManager;
         }
 
         // GET: Login
@@ -33,7 +36,7 @@ namespace WebAppVsEat.Controllers
         {
             string username = login1.username;
             string password = login1.password;
-
+            User user = UserManager.GetUserByEmail(username);
             //Check the user name and password  
             //Here can be implemented checking logic from the database  
             
@@ -45,10 +48,25 @@ namespace WebAppVsEat.Controllers
                 var identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name, username)
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
+                string roles;
+
+                if(CustomerManager.IsACustomer(user))
+                { 
+                    roles = "Customer";
+                }else
+                {
+                    roles = "Deliver";
+                }
+
+                
+                identity.AddClaim(new Claim(ClaimTypes.Role, roles));
+
+
+                var principal = new ClaimsPrincipal(identity);
 
                 
 
-                var principal = new ClaimsPrincipal(identity);
+
 
                 var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 

@@ -45,8 +45,8 @@
             padding: 15px;
             color: #FFFFFF;
             font-size: 14px;
-            -webkit-transition: all 0.3 ease;
-            transition: all 0.3 ease;
+            -webkit-transition: all ease;
+            transition: all ease;
             cursor: pointer;
         }
 
@@ -130,15 +130,16 @@
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-user icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="Name" style="margin-right:10px" type="text" placeholder="Name" name="usrnm">
+                <input asp-for="Name" style="margin-right:10px" type="text" placeholder="Name">
                 <span asp-validation-for="Name" class="text-danger"></span>
+            
                 <input asp-for="Firstname" type="text" placeholder="Firstname" />
                 <span asp-validation-for="Firstname" class="text-danger"></span>
-            </div>
+                </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
                 <i class="fa fa-birthday-cake icon" style="font-size:25px; padding: 10px;background:#870808; color:white; min-width: 40px;text-align: center; height:50px"></i>
-                <input asp-for="Date" type="date" name="Birthdate">
+                <input asp-for="Date" type="date">
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
 
@@ -149,8 +150,8 @@
             </div>
 
             <div class="input-container" style="display: -ms-flexbox; display: flex;width: 100%; margin-bottom: 15px;">
-                <input style="margin-right:10px" type="text" placeholder="NPA" name="usrnm">
-                <select asp-for="IdCity" class="form-control" asp-items="@(new SelectList(ViewBag.City, "Value", "Text",ViewBag.Selected))" style="border-radius:initial; background-color:#f2f2f2; height:50px;"></select>
+                <input style="margin-right:10px" type="text" placeholder="NPA" name="NPA">
+                <select asp-for="IdCity" asp-items="@(new SelectList(ViewBag.City, "Value", "Text",ViewBag.Selected))" style="border-radius:initial; background-color:#f2f2f2; height:50px;"></select>
                 <span asp-validation-for="IdCity" class="text-danger"></span>
             </div>
              
@@ -182,8 +183,4 @@
     </div>
 </div>
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 

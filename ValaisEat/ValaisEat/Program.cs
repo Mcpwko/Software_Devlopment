@@ -51,18 +51,14 @@ namespace ConsoleApp
             }
 
 
-            var user2 = new User();
+            var customerManager = new CustomerManager(Configuration);
 
-            user2.Name = "Kevin";
-            user2.Firstname = "Coppey";
-            user2.Adress = "Chemin des Etriettes 51";
-            user2.Telephon = "025 423 23 11";
-            user2.Email = "kevin@hes.ch";
-            user2.Password = "Client2";
-            user2.Date = DateTime.Today;
-            user2.IdCity = 3;
+            var customers = customerManager.GetCustomers();
 
-            userManager.AddUser(user2);
+            foreach(var customer in customers)
+            {
+                Console.WriteLine(customer.ToString());
+            }
 
             
 

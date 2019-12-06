@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BLL
 {
-    public class CustomerManager
+    public class CustomerManager : ICustomerManager
     {
         public ICustomerDB customerDB { get; }
 
@@ -38,6 +38,22 @@ namespace BLL
         public int DeleteCustomer(int idClient)
         {
             return customerDB.DeleteCustomer(idClient);
+        }
+
+        public bool IsACustomer(User user)
+        {
+
+            var list = GetCustomers();
+
+
+            foreach (var user2 in list)
+            {
+                if (user2.IdUser == user.IdUser)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

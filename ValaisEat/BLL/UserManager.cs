@@ -48,5 +48,21 @@ namespace BLL
             return false;
         }
 
+
+        public User GetUserByEmail(string email)
+        {
+            var users = GetUsers();
+
+            foreach(User user in users)
+            {
+                if (user.Email.Equals(email))
+                    return user;
+            }
+
+            return null;
+
+            
+        }
+
     }
 }

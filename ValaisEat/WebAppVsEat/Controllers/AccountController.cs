@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BLL;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppVsEat.Controllers
 {
+    
     public class AccountController : Controller
     {
 
@@ -18,12 +20,13 @@ namespace WebAppVsEat.Controllers
         {
             Configuration = configuration;
         }
+        [Authorize(Roles = "Customer")]
         // GET: Account
         public ActionResult Index()
         {
             return View();
         }
-
+        [Authorize(Roles = "Deliver")]
         // GET: Account/Details/5
         public ActionResult Details(int id)
         {

@@ -10,5 +10,6 @@ namespace BLL
         User AddUser(User user);
         int UpdateUser(User user);
         bool VerificateAuthentification(string username, string password);
+        User GetUserByEmail(string email);
     }
 }

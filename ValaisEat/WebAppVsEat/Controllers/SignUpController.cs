@@ -12,12 +12,12 @@ namespace WebAppVsEat.Controllers
 {
     public class SignUpController : Controller
     {
-        private IUserManager UserManager { get; }
-        private ICityManager CityManager { get; }
+        private IUserManager userManager2 { get; }
+        private ICityManager cityManager2 { get; }
         public SignUpController(IUserManager userManager, ICityManager cityManager)
         {
-            UserManager = userManager;
-            CityManager = cityManager;
+            userManager2 = userManager;
+            cityManager2 = cityManager;
         }
 
         // GET: SignUp
@@ -30,7 +30,7 @@ namespace WebAppVsEat.Controllers
         public ActionResult SignUp()
         {
 
-            var cities = CityManager.GetCities();
+            var cities = cityManager2.GetCities();
 
             var citieslist = new List<SelectListItem>();
 
@@ -51,7 +51,8 @@ namespace WebAppVsEat.Controllers
             try
             {
                 
-                UserManager.AddUser(user);
+                userManager2.AddUser(user);
+                Console.WriteLine("Success");
 
 
 
@@ -59,7 +60,8 @@ namespace WebAppVsEat.Controllers
             }
             catch
             {
-                return RedirectToAction("SignUp","SignUp");
+                Console.WriteLine("PIECE OF SHIT");
+                return View();
             }
         }
     }

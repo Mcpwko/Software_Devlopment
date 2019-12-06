@@ -47,11 +47,16 @@ namespace WebAppVsEat
              options.AccessDeniedPath = new PathString("/Home/Index");
          });
 
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IUserDB, UserDB>();
+
+            services.AddScoped<ICustomerManager, CustomerManager>();
+            services.AddScoped<ICustomerDB, CustomerDB>();
 
             services.AddScoped<ICityManager, CityManager>();
             services.AddScoped<ICityDB, CityDB>();
-            services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<IUserDB, UserDB>();
+
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
@@ -83,6 +88,7 @@ namespace WebAppVsEat
             app.UseSession();
 
             app.UseAuthentication();
+            
 
             app.UseMvc(routes =>
             {

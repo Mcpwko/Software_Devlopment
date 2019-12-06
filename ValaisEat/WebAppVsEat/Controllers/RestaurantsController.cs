@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppVsEat.Controllers
 {
-    
+    [Authorize]
     public class RestaurantsController : Controller
     {
         private IConfiguration Configuration { get; }
@@ -26,7 +26,7 @@ namespace WebAppVsEat.Controllers
         {
             return View();
         }
-        [Authorize]
+        
         public ActionResult GetRestaurants()
         {
             RestaurantManager rManager = new RestaurantManager(Configuration);
@@ -35,11 +35,13 @@ namespace WebAppVsEat.Controllers
         }
 
         // GET: Restaurants/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id,string name)
         {
             DishManager rManager = new DishManager(Configuration);
             var dishes = rManager.GetDishes(id);
 
+
+            ViewBag.nameResto = name;
             
 
             return View(dishes);

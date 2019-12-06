@@ -11,5 +11,7 @@ namespace BLL
         Customer AddCustomer(Customer customer);
         int UpdateCustomer(Customer customer);
         int DeleteCustomer(int idClient);
+
+        bool IsACustomer(User user);
     }
 }
