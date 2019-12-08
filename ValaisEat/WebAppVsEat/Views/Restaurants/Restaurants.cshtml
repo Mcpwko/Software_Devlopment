@@ -1,0 +1,71 @@
+﻿
+
+
+@model IEnumerable<WebAppVsEat.Models.Restaurants>
+
+@{
+    ViewData["Title"] = "GetRestaurants";
+}
+<style>
+    a.my-class { color: white}
+</style>
+  
+<h2>Restaurants</h2>
+
+
+<table class="table" style="background-color:lightgrey">
+    <thead>
+        <tr style="background-color:#3d3a3a; color:white;">
+
+            <th style="background-color:#3d3a3a; color:white;">
+                Name
+            </th>
+            <th style="background-color:#3d3a3a ; color:white;">
+                Schedule
+            </th>
+            <th style="background-color:#3d3a3a ; color:white;">
+                Type
+            </th>
+            <th style="background-color:#3d3a3a ; color:white;">
+                Address
+            </th>
+            <th style="background-color:#3d3a3a ; color:white;">
+                NPA
+            </th>
+            <th style="background-color:#3d3a3a ; color:white;">
+                City
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.Schedule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.restaurant.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city.NPA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.city.CityName)
+            </td>
+            <td>
+                <button class="btn" style="background-color:#aa1515;">
+                    @Html.ActionLink("View Dishes", "Details", new { id = item.restaurant.IdRestaurant, name = item.restaurant.Name }, new { @class = "my-class" })
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

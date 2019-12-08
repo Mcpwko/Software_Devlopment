@@ -64,5 +64,21 @@ namespace BLL
             
         }
 
+        public bool UserAlreadyExist(string email)
+        {
+            var users = GetUsers();
+
+            foreach (User user in users)
+            {
+                if (user.Email.Equals(email))
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
     }
 }

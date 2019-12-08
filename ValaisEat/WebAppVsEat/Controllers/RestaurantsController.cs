@@ -9,17 +9,23 @@ using WebAppVsEat.Models;
 using BLL;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using DTO;
+using System.Web;
 
 namespace WebAppVsEat.Controllers
 {
     [Authorize]
     public class RestaurantsController : Controller
     {
-        private IConfiguration Configuration { get; }
+        private IRestaurantManager RestaurantManager { get; }
+        private IDishManager DishManager { get; }
+        private ICityManager CityManager { get; }
 
-        public RestaurantsController(IConfiguration configuration)
+        public RestaurantsController(IRestaurantManager restaurantManager,IDishManager dishManager,ICityManager cityManager)
         {
-            Configuration = configuration;
+            RestaurantManager = restaurantManager;
+            DishManager = dishManager;
+            CityManager = cityManager;
         }
         // GET: Restaurants
         public ActionResult Index()
@@ -27,27 +33,49 @@ namespace WebAppVsEat.Controllers
             return View();
         }
         
-        public ActionResult GetRestaurants()
+        public ActionResult Restaurants()
         {
-            RestaurantManager rManager = new RestaurantManager(Configuration);
-            var restaurantlist = rManager.GetRestaurants();
-            return View(restaurantlist);
+            
+            var restaurantlist = RestaurantManager.GetRestaurants();
+            var citylist = CityManager.GetCities();
+
+            var listrestaurant = from resto in restaurantlist
+                                 join ville in citylist on resto.IdCity equals ville.IdCity
+                                 select new Restaurants { restaurant=resto ,city=ville };
+
+            return View(listrestaurant);
         }
 
         // GET: Restaurants/Details/5
         public ActionResult Details(int id,string name)
         {
-            DishManager rManager = new DishManager(Configuration);
-            var dishes = rManager.GetDishes(id);
+            
+            var dishes = DishManager.GetDishes(id);
 
-
+            
             ViewBag.nameResto = name;
             
 
             return View(dishes);
         }
 
-       
+        public ActionResult AddItem(int id)
+        {
+            string id2 = id + "";
+            var a = this.HttpContext.Session.GetString("Cart");
+
+            
+            HttpContext.Session.SetString("Cart", id2);
+
+
+            //Response.Cookies.Append("MyCookie", id2);
+
+            
+
+            return RedirectToAction("Restaurants");
+        }
+
+
         // GET: Restaurants/Create
         public ActionResult Create()
         {

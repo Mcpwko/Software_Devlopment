@@ -1,34 +1,30 @@
 ﻿@model IEnumerable<DTO.Dish>
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "ShoppingCart";
 }
 
-    <style>
-        a.my-class {
-            color: white
-        }
-    </style>
+<h2>ShoppingCart</h2>
 
-<h2>Dishes from @ViewBag.nameResto</h2>
-
-
-<table class="table"  style="background-color:lightgrey">
+<table class="table">
     <thead>
         <tr>
-            <th style="background-color:#3d3a3a; color:white;">
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th style="background-color:#3d3a3a; color:white;">
+            <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th style="background-color:#3d3a3a; color:white;">
+            <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th style="background-color:#3d3a3a; color:white;">
-                Type of food
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th style="background-color:#3d3a3a; color:white;"></th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRestaurant)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -46,11 +42,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td >
-                <button class="btn" style="background-color:#aa1515;">
-                    @Html.ActionLink("Add to Cart", "AddItem", new { id=item.IdDish }, new { @class = "my-class" })
-                    
-                </button>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRestaurant)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

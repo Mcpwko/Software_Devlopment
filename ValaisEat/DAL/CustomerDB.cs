@@ -9,17 +9,17 @@ namespace DAL
 {
     public class CustomerDB : ICustomerDB
     {
-        public IConfiguration Configuration { get; }
+        private string connectionString = null;
         public CustomerDB(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var config = configuration;
+            connectionString = config.GetConnectionString("DefaultConnection");
         }
 
 
         public Customer GetCustomer(int id)
         {
             Customer customer = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
             try
@@ -63,7 +63,6 @@ namespace DAL
         public List<Customer> GetCustomers()
         {
             List<Customer> results = null;
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
@@ -104,18 +103,14 @@ namespace DAL
         public Customer AddCustomer(Customer customer)
         {
 
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into Customer(IdClient,IdUser) VALUES(@IdClient,@IdUser);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into Customer(IdUser) VALUES(@IdUser); SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
-
-
-                    cmd.Parameters.AddWithValue("@IdClient", customer.IdClient);
                     cmd.Parameters.AddWithValue("@IdUser", customer.IdUser);
 
 
@@ -138,7 +133,6 @@ namespace DAL
 
         public int UpdateCustomer(Customer customer)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
 
             try
@@ -170,7 +164,6 @@ namespace DAL
 
         public int DeleteCustomer(int IdClient)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
             int result = 0;
 
             try

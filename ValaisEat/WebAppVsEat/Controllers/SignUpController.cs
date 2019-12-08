@@ -12,12 +12,14 @@ namespace WebAppVsEat.Controllers
 {
     public class SignUpController : Controller
     {
-        private IUserManager userManager2 { get; }
-        private ICityManager cityManager2 { get; }
-        public SignUpController(IUserManager userManager, ICityManager cityManager)
+        private IUserManager UserManager { get; }
+        private ICityManager CityManager { get; }
+        private ICustomerManager CustomerManager { get; }
+        public SignUpController(IUserManager userManager, ICityManager cityManager, ICustomerManager customerManager)
         {
-            userManager2 = userManager;
-            cityManager2 = cityManager;
+            UserManager = userManager;
+            CityManager = cityManager;
+            CustomerManager = customerManager;
         }
 
         // GET: SignUp
@@ -30,7 +32,7 @@ namespace WebAppVsEat.Controllers
         public ActionResult SignUp()
         {
 
-            var cities = cityManager2.GetCities();
+            var cities = CityManager.GetCities();
 
             var citieslist = new List<SelectListItem>();
 
@@ -50,18 +52,25 @@ namespace WebAppVsEat.Controllers
         {
             try
             {
-                
-                userManager2.AddUser(user);
-                Console.WriteLine("Success");
+                if (UserManager.UserAlreadyExist(user.Email)==false)
+                {
+                    var customer = new Customer();
+                    
+                    UserManager.AddUser(user);
+                    customer.IdUser = user.IdUser;
 
+                    CustomerManager.AddCustomer(customer);
+                    return RedirectToAction("Index", "Home");
 
+                }
+                TempData["Message"] = "Email already registerd, try another email or log in !";
+                return RedirectToAction(nameof(SignUpController.SignUp));
 
-                return RedirectToAction("Index", "Home");
             }
             catch
             {
-                Console.WriteLine("PIECE OF SHIT");
-                return View();
+                TempData["Message"] = "Please fill every fields correctly!";
+                return RedirectToAction(nameof(SignUpController.SignUp));
             }
         }
     }

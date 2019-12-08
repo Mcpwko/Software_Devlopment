@@ -63,10 +63,10 @@
             <div class="topnav topnav-right">
                 <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 <a asp-area="" asp-controller="Home" asp-action="About">About</a>
-                <a asp-area="" asp-controller="Restaurants" asp-action="GetRestaurants">Restaurants</a>
+                <a asp-area="" asp-controller="Restaurants" asp-action="Restaurants">Restaurants</a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a><span class="glyphicon glyphicon-shopping-cart"></span> My Cart</a>
+
                     string name = User.Identity.Name;
                     if (User.IsInRole("Customer"))
                     {
@@ -77,6 +77,7 @@
                         <a asp-area="" asp-controller="Account" asp-action="Details"><span class="glyphicon glyphicon-user"></span> @name  </a>
                     }
                     <a asp-area="" asp-controller="Home" asp-action="DeleteCookie"><span class="glyphicon glyphicon-log-in"></span> Log out</a>
+                    <a asp-area="" asp-controller="Cart" asp-action="ShoppingCart"><span class="glyphicon glyphicon-shopping-cart"></span> My Cart</a>
 
                 }
                 else

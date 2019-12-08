@@ -2,7 +2,9 @@
 using DTO;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ConsoleApp
 {
@@ -25,20 +27,6 @@ namespace ConsoleApp
                 Console.WriteLine(restaurant.ToString());
             }
 
-            var dishManager = new DishManager(Configuration);
-
-            var dishes = dishManager.GetDishes(2);
-
-            foreach (var dish in dishes)
-            {
-                Console.WriteLine(dish.ToString());
-            }
-
-            var userManager = new UserManager(Configuration);
-            var animal = userManager.GetUser(1);
-
-            Console.WriteLine(animal.ToString());
-
 
 
             var cityManager = new CityManager(Configuration);
@@ -51,16 +39,28 @@ namespace ConsoleApp
             }
 
 
-            var customerManager = new CustomerManager(Configuration);
+            var dishManager = new DishManager(Configuration);
 
-            var customers = customerManager.GetCustomers();
+            List<Dish> dishes = new List<Dish>();
 
-            foreach(var customer in customers)
+            var dish = dishManager.GetDish(1);
+
+            var dish2 = dishManager.GetDish(2);
+
+            dishes.Add(dish);
+            dishes.Add(dish2);
+
+            Console.WriteLine(dish.ToString());
+
+
+
+            foreach (var plat in dishes)
             {
-                Console.WriteLine(customer.ToString());
+                Console.WriteLine(plat.ToString());
             }
 
-            
+
+
 
 
         }

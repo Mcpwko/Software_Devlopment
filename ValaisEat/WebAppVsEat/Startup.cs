@@ -56,7 +56,13 @@ namespace WebAppVsEat
             services.AddScoped<ICityManager, CityManager>();
             services.AddScoped<ICityDB, CityDB>();
 
-            
+            services.AddScoped<IRestaurantManager, RestaurantManager>();
+            services.AddScoped<IRestaurantDB, RestaurantDB>();
+
+            services.AddScoped<IDishManager, DishManager>();
+            services.AddScoped<IDishDB, DishDB>();
+
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
