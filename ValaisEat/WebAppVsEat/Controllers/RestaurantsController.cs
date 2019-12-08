@@ -11,12 +11,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using DTO;
 using System.Web;
+using Newtonsoft.Json;
+
 
 namespace WebAppVsEat.Controllers
 {
+
     [Authorize]
     public class RestaurantsController : Controller
     {
+
         private IRestaurantManager RestaurantManager { get; }
         private IDishManager DishManager { get; }
         private ICityManager CityManager { get; }
@@ -61,18 +65,46 @@ namespace WebAppVsEat.Controllers
 
         public ActionResult AddItem(int id)
         {
-            string id2 = id + "";
+            /**string id2 = id + "";
             var a = this.HttpContext.Session.GetString("Cart");
 
             
             HttpContext.Session.SetString("Cart", id2);
 
 
-            //Response.Cookies.Append("MyCookie", id2);
-
+            Response.Cookies.Append("MyCookie", id2);*/
             
+            if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") == null)
+            {
+                List<Cart> cart = new List<Cart>();
+                cart.Add(new Cart { dish = DishManager.GetDish(id), quantity = 1 });
+                HttpContext.Session.SetObjectAsJson("Cart",cart);
+                
+            }
+            else
+            {
+                int index = isExist(id);
+                if(index!= -1)
+                {
+                    
+                }
+                else
+                {
+                    
+                }
+                HttpContext.Session.SetObjectAsJson("Cart", 1);
+            }
 
             return RedirectToAction("Restaurants");
+        }
+
+        private int isExist(int id)
+        {
+            List<Dish> cart = HttpContext.Session.GetObjectFromJson<List<Dish>>("Cart");
+            for (int i = 0; i < cart.Count; i++)
+                if (cart[i].IdDish.Equals(id))
+                    return i;
+            return -1;
         }
 
 

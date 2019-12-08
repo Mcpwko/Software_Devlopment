@@ -9,7 +9,7 @@ namespace WebAppVsEat.Models
     public class Cart
     {
         public Dish dish { get; set; }
-        public Order_Dishes order_dish { get; set; }
+        public int quantity { get; set; }
 
     }
 }
