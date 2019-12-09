@@ -10,6 +10,7 @@ namespace WebAppVsEat.Models
     {
         public Dish dish { get; set; }
         public int quantity { get; set; }
+        public double totalPriceProduct { get; set; }
 
     }
 }

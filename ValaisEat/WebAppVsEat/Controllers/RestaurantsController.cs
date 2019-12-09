@@ -51,24 +51,35 @@ namespace WebAppVsEat.Controllers
         }
 
         // GET: Restaurants/Details/5
-        public ActionResult Details(int id,string name)
+        public ActionResult Details(int id)
         {
             
             var dishes = DishManager.GetDishes(id);
 
-            
-            ViewBag.nameResto = name;
 
+            ViewBag.nameResto = RestaurantManager.GetRestaurant(id).Name;
+            var cartest = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+            List<Cart> cartlist = cartest;
             var cart= new List<Cart>();
 
             if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") == null)
             {
                 
 
+                
+
             }
             else
             {
-                cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+                if (!cartlist.Any(m => m.dish.IdRestaurant == id))
+                {
+                    HttpContext.Session.SetObjectAsJson("Cart", cart);
+                }
+                else
+                {
+                    cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+                }
+                
             }
 
             var viewModel = new CartDish();
@@ -101,7 +112,7 @@ namespace WebAppVsEat.Controllers
             if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") == null)
             {
                 List<Cart> cart = new List<Cart>();
-                cart.Add(new Cart { dish = DishManager.GetDish(id), quantity = 1 });
+                cart.Add(new Cart { dish = DishManager.GetDish(id), quantity = 1,totalPriceProduct=DishManager.GetDish(id).Price});
                 HttpContext.Session.SetObjectAsJson("Cart",cart);
                 
             }
@@ -112,11 +123,15 @@ namespace WebAppVsEat.Controllers
                 {
                     List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
                     cart.Select(m => m.dish.IdDish == id);
+                    cart[index].quantity++;
+                    cart[index].totalPriceProduct += DishManager.GetDish(id).Price;
+                    HttpContext.Session.SetObjectAsJson("Cart", cart);
+
                 }
                 else
                 {
                     List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
-                    cart.Add(new Cart { dish = DishManager.GetDish(id), quantity = 1 });
+                    cart.Add(new Cart { dish = DishManager.GetDish(id), quantity = 1, totalPriceProduct = DishManager.GetDish(id).Price });
                     HttpContext.Session.SetObjectAsJson("Cart", cart);
                 }
                 
@@ -126,22 +141,41 @@ namespace WebAppVsEat.Controllers
 
             int idResto = dish.IdRestaurant;
             string name = RestaurantManager.GetRestaurant(idResto).Name;
-            ViewBag.nameResto = name;
 
             return RedirectToAction("Details/" + idResto);
         }
 
         private int isExist(int id)
         {
-            List<Dish> cart = HttpContext.Session.GetObjectFromJson<List<Dish>>("Cart");
+            List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
             for (int i = 0; i < cart.Count; i++)
-                if (cart[i].IdDish.Equals(id))
+                if (cart[i].dish.IdDish.Equals(id))
                     return i;
             return -1;
         }
 
-
         public ActionResult RemoveItem(int id)
+        {
+            List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+            var itemToRemove = cart.Single(r => r.dish.IdDish == id);
+
+            int index = isExist(id);
+            if (cart[index].quantity >= 2)
+            {
+                cart[index].quantity--;
+                cart[index].totalPriceProduct -= DishManager.GetDish(id).Price;
+                HttpContext.Session.SetObjectAsJson("Cart", cart);
+            }
+
+            Dish dish = DishManager.GetDish(id);
+
+            int idResto = dish.IdRestaurant;
+
+            return RedirectToAction("Details/" + idResto);
+        }
+
+
+        public ActionResult RemoveAllItems(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
 
