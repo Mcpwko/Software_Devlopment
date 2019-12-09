@@ -58,9 +58,33 @@ namespace WebAppVsEat.Controllers
 
             
             ViewBag.nameResto = name;
-            
 
-            return View(dishes);
+            var cart= new List<Cart>();
+
+            if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") == null)
+            {
+                
+
+            }
+            else
+            {
+                cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+            }
+
+            var viewModel = new CartDish();
+            viewModel.ListA = dishes;
+            viewModel.ListB = cart;
+            double price = 0;
+
+            foreach(var plat in viewModel.ListB)
+            {
+               price += plat.dish.Price;
+            }
+
+            viewModel.price = price;
+
+            return View(viewModel);
+            
         }
 
         public ActionResult AddItem(int id)
@@ -86,16 +110,25 @@ namespace WebAppVsEat.Controllers
                 int index = isExist(id);
                 if(index!= -1)
                 {
-                    
+                    List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+                    cart.Select(m => m.dish.IdDish == id);
                 }
                 else
                 {
-                    
+                    List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+                    cart.Add(new Cart { dish = DishManager.GetDish(id), quantity = 1 });
+                    HttpContext.Session.SetObjectAsJson("Cart", cart);
                 }
-                HttpContext.Session.SetObjectAsJson("Cart", 1);
+                
             }
 
-            return RedirectToAction("Restaurants");
+            Dish dish = DishManager.GetDish(id);
+
+            int idResto = dish.IdRestaurant;
+            string name = RestaurantManager.GetRestaurant(idResto).Name;
+            ViewBag.nameResto = name;
+
+            return RedirectToAction("Details/" + idResto);
         }
 
         private int isExist(int id)
@@ -105,6 +138,24 @@ namespace WebAppVsEat.Controllers
                 if (cart[i].IdDish.Equals(id))
                     return i;
             return -1;
+        }
+
+
+        public ActionResult RemoveItem(int id)
+        {
+            List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
+
+            var itemToRemove = cart.Single(r => r.dish.IdDish == id);
+            cart.Remove(itemToRemove);
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            Dish dish = DishManager.GetDish(id);
+
+            int idResto = dish.IdRestaurant;
+
+            return RedirectToAction("Details/" + idResto);
+
         }
 
 

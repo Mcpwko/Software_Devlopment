@@ -42,7 +42,7 @@ namespace WebAppVsEat
          {
              options.Cookie.HttpOnly = true;
              options.SlidingExpiration = true;
-             options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+             options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
              options.LoginPath = new PathString("/Login/login");
              options.AccessDeniedPath = new PathString("/Home/Index");
          });

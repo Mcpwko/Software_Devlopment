@@ -1,29 +1,29 @@
-﻿@model IEnumerable<DTO.Dish>
+﻿@model WebAppVsEat.Models.CartDish
 
 @{
     ViewData["Title"] = "Details";
 }
 
-    <style>
-        a.my-class {
-            color: white
-        }
-    </style>
+<style>
+    a.my-class {
+        color: white
+    }
+</style>
 
 <h2>Dishes from @ViewBag.nameResto</h2>
 
 
-<table class="table"  style="background-color:lightgrey">
+<table class="table" style="background-color:lightgrey">
     <thead>
         <tr>
             <th style="background-color:#3d3a3a; color:white;">
-                @Html.DisplayNameFor(model => model.Name)
+                Name
             </th>
             <th style="background-color:#3d3a3a; color:white;">
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th style="background-color:#3d3a3a; color:white;">
-                @Html.DisplayNameFor(model => model.Price)
+                Price
             </th>
             <th style="background-color:#3d3a3a; color:white;">
                 Type of food
@@ -32,27 +32,225 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td >
-                <button class="btn" style="background-color:#aa1515;">
-                    @Html.ActionLink("Add to Cart", "AddItem", new { id=item.IdDish }, new { @class = "my-class" })
-                    
-                </button>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ListA)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    <button class="btn" style="background-color:#aa1515;">
+                        @Html.ActionLink("Add to Cart", "AddItem", new { id = item.IdDish }, new { @class = "my-class" })
+
+                    </button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+
+<style>
+    .login-page {
+        width: 500px;
+        padding: 8% 0 0;
+        margin: auto;
+    }
+
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #FFFFFF;
+        max-width: 360px;
+        margin: 0 auto 100px;
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #b91615;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: #FFFFFF;
+            font-size: 14px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
+        }
+
+            .form button:hover, .form button:active, .form button:focus {
+                background: #b3b3b3;
+            }
+
+        .form .message {
+            margin: 15px 0 0;
+            color: #b3b3b3;
+            font-size: 12px;
+        }
+
+            .form .message a {
+                color: #b91615;
+                text-decoration: none;
+            }
+
+    .container2 {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+        .container2:before, .container2:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .container2 .info {
+            margin: 50px auto;
+            text-align: center;
+        }
+
+            .container2 .info h1 {
+                margin: 0 0 15px;
+                padding: 0;
+                font-size: 36px;
+                font-weight: 300;
+                color: #1a1a1a;
+            }
+
+            .container2 .info span {
+                color: #4d4d4d;
+                font-size: 12px;
+            }
+
+                .container2 .info span a {
+                    color: #000000;
+                    text-decoration: none;
+                }
+
+                .container2 .info span .fa {
+                    color: #EF3B3A;
+                }
+
+    .bg2 {
+        /* The image used */
+        background-image: url("../../wwwroot/images/LOGINSpaghetti.jpg");
+        /* Full height */
+        height: 100%;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+
+
+@if (!Model.ListB.Any())
+{
+
+}
+else
+{
+
+
+
+    <div class="login-page ">
+        <div class="form" style="width:500px">
+
+            <form class="login-form">
+                <h1>Shopping Cart</h1>
+
+                <table class="table" style="background-color:lightgrey">
+                    <thead>
+                        <tr>
+                            <th style="background-color:#3d3a3a; color:white;">
+                                Name
+                            </th>
+                            <th style="background-color:#3d3a3a; color:white; width:160px;">
+                                Price
+                            </th>
+                            <th style="background-color:#3d3a3a; color:white;"> Quantité</th>
+                            <th>Total Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ListB)
+                        {
+                            <tr>
+                                <td >
+                                    @Html.DisplayFor(modelItem => item.dish.Name)
+                                </td>
+                                <td  style="width:40px;white-space:nowrap;" >
+                                    @Html.DisplayFor(modelItem => item.dish.Price) CHF  
+                                </td>
+                                <td style="white-space:nowrap;">
+                                    <!--<input type="button" onclick="decrementValue()" value="-" style="width:10px; background-color:#aa1515; height:10px;color:white;line-height: 2px;" />>-->
+                                    <!--<input type="text" name="quantity" value="1" maxlength="2" max="10" size="1" id="number" style="width:50px; height:10px;" />-->
+                                    <select name="quantity" id="number" style="width:50px; height:30px;">
+                                        <option value="1">1 </option>
+                                        <option value="2">2 </option>
+                                        <option value="3">3 </option>
+                                        <option value="4">4 </option>
+                                        <option value="5">5 </option>
+                                        <option value="6">6 </option>
+                                        <option value="6">7 </option>
+                                        <option value="6">8 </option>
+                                        <option value="6">9 </option>
+                                        <option value="6">10 </option>
+                                    </select>
+                                    <!--<input type="button" value="+" onclick="incrementValue()" style="width:10px; background-color:#aa1515; height:10px;color:white;line-height: 2px;" />-->
+
+                                </td>
+                                <td>@item.dish.Price*@item.quantity</td>
+                                <td><button class="btn" style="background-color:#aa1515;">
+                                        @Html.ActionLink("Remove", "RemoveItem", new { id = item.dish.IdDish }, new { @class = "my-class" })
+
+                                    </button>
+                                </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="3">Total Price : @Model.price CHF</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <button>Order</button>
+
+
+
+                </form>
+            </div>
+        </div>
+
+    }
