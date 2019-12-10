@@ -25,7 +25,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Order WHERE IdOrder = @id";
+                    string query = "SELECT * FROM [Order] WHERE IdOrder = @id";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -160,7 +160,7 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "UPDATE Order SET Status=@Status,Date=@Date,ShippingDate=@ShippingDate,TotalPrice=@TotalPrice,IdCourier=@IdCourier,IdClient=@IdClient WHERE IdOrder=@IdOrder";
+                    string query = "UPDATE [Order] SET Status=@Status,Date=@Date,ShippingDate=@ShippingDate,TotalPrice=@TotalPrice,IdCourier=@IdCourier,IdClient=@IdClient WHERE IdOrder=@IdOrder";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 

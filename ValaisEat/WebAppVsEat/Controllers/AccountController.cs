@@ -31,8 +31,7 @@ namespace WebAppVsEat.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "Deliver")]
-        // GET: Account/Details/5
+
         public ActionResult Deliver()
         {
             string name = User.Identity.Name;
@@ -41,13 +40,25 @@ namespace WebAppVsEat.Controllers
 
             var orderslist = new List<Order>();
 
-            if (OrderManager.GetOrdersByCourier(courier.IdCourier)!= null)
+            if (OrderManager.GetOrdersByCourier(courier.IdCourier) != null)
             {
                 orderslist = OrderManager.GetOrdersByCourier(courier.IdCourier);
             }
 
-            return View(orderslist);
+            var descendingOrder = orderslist.OrderByDescending(i => i.IdOrder);
+
+            return View(descendingOrder);
+        
         }
+
+        public ActionResult ConfirmDelivery(int id)
+        {
+            OrderManager.UpdateOrderStatus(id);
+
+            return RedirectToAction("Deliver");
+            
+        }
+
 
     }
 }

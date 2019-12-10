@@ -27,9 +27,6 @@
                 @Html.DisplayNameFor(model => model.TotalPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdCourier)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.IdClient)
             </th>
             <th></th>
@@ -52,17 +49,16 @@
                 @Html.DisplayFor(modelItem => item.ShippingDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCourier)
+                @Html.DisplayFor(modelItem => item.TotalPrice) CHF
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdClient)
             </td>
+            @if (!item.Status.Equals("Completed")) { 
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) 
+                @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.IdOrder })
             </td>
+            }
         </tr>
 }
     </tbody>

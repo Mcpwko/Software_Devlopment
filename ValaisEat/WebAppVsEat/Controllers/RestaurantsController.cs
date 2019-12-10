@@ -82,6 +82,21 @@ namespace WebAppVsEat.Controllers
                 
             }
 
+            var date = DateTime.Now;
+            var timeDay = date.TimeOfDay;
+            var nextFullHour = TimeSpan.FromHours(Math.Ceiling(timeDay.TotalHours));
+
+
+            //ViewBag.Time = nextFullHour;
+            date.AddMinutes(15);
+            
+            var dt1 = RoundUp(date, TimeSpan.FromMinutes(15));
+            var timeDay2 = dt1.TimeOfDay;
+
+
+            ViewBag.Time = timeDay2;
+
+
             var viewModel = new CartDish();
             viewModel.ListA = dishes;
             viewModel.ListB = cart;
@@ -96,6 +111,11 @@ namespace WebAppVsEat.Controllers
 
             return View(viewModel);
             
+        }
+
+        public DateTime RoundUp(DateTime dt, TimeSpan d)
+        {
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
 
         public ActionResult AddItem(int id)

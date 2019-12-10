@@ -12,5 +12,7 @@ namespace WebAppVsEat.Models
         public int quantity { get; set; }
         public double totalPriceProduct { get; set; }
 
+        public TimeSpan date { get; set; }
+
     }
 }

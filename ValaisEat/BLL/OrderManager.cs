@@ -58,5 +58,14 @@ namespace BLL
 
             return newlist;
         }
+
+
+        public void UpdateOrderStatus(int id)
+        {
+            Order order = GetOrder(id);
+            order.Status = "Completed";
+            UpdateOrder(order);
+
+        }
     }
 }

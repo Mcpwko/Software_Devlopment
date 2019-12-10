@@ -192,6 +192,11 @@ else
                         <tr>
                             <td colspan="5"><strong>@Model.Sum(m => m.totalPriceProduct) CHF</strong></td>
                         </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center">Choose a time for the delivery</td>
+                            <td colsplan="1">
+                            <td> <input type="time" name="deliverytime" min="@ViewBag.Time" value="@ViewBag.Time" max="22:45" step="900"  />
+                        </tr>
                     </tbody>
                 </table>
 

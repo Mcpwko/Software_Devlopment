@@ -13,5 +13,6 @@ namespace BLL
         int UpdateOrder(Order order);
         int DeleteOrder(int idOrder);
         List<Order> GetOrdersByCourier(int id);
+        void UpdateOrderStatus(int id);
     }
 }

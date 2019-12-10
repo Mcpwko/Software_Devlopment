@@ -245,17 +245,23 @@ else
                         <tr>
                             <td colspan="5"><strong>@Model.ListB.Sum(m => m.totalPriceProduct) CHF</strong></td>
                         </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center">Choose a time for the delivery</td>
+                            <td colsplan="3">
+                            <td> <input type="time" name="deliverytime" min="@ViewBag.Time" value="@ViewBag.Time" max="22:00" step="900" asp-for="ListB[0].date" />
+                        </tr>
+                        <tr>
+                        </tr>
                     </tbody>
                 </table>
 
-                <input type="time" min="11:00" max="22:30" step="900" />
 
                 <button asp-area="" asp-controller="Cart" asp-action="Order">Order</button>
 
 
 
             </form>
-            </div>
         </div>
-
-    }
+    </div>
+    
+}

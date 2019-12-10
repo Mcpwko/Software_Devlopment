@@ -47,13 +47,30 @@ namespace WebAppVsEat.Controllers
             results = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
             }
 
-            
-            
+
+            var date = DateTime.Now;
+            var timeDay = date.TimeOfDay;
+            var nextFullHour = TimeSpan.FromHours(Math.Ceiling(timeDay.TotalHours));
+
+
+            //ViewBag.Time = nextFullHour;
+            date.AddMinutes(15);
+
+            var dt1 = RoundUp(date, TimeSpan.FromMinutes(15));
+            var timeDay2 = dt1.TimeOfDay;
+
+
+            ViewBag.Time = timeDay2;
+
+
             // Displays the shopping cart
             return View(results);
         }
 
-
+        public DateTime RoundUp(DateTime dt, TimeSpan d)
+        {
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
+        }
 
         public ActionResult AddItem(int id)
         {
@@ -140,7 +157,7 @@ namespace WebAppVsEat.Controllers
         }
 
 
-        public ActionResult Order()
+        public ActionResult Order(string deliverytime)
         {
             User user = UserManager.GetUserByEmail(User.Identity.Name);
             int idCustomer = CustomerManager.GetCustomerByIdUser(user.IdUser);
@@ -148,12 +165,17 @@ namespace WebAppVsEat.Controllers
 
             var courrierlist = CourierManager.GetCouriers();
 
+            string tspan = Convert.ToString(deliverytime);
+            DateTime dt = DateTime.Now;
+            DateTime ts = DateTime.Parse(tspan);
+
+
 
             //Insert the order from the cart
             Order order = new Order();
             order.Status = "Not delivered";
-            order.Date = DateTime.Now;
-            order.ShippingDate = DateTime.Now.AddMinutes(15);
+            order.Date = dt;
+            order.ShippingDate = ts;
             order.TotalPrice = cartlists.Sum(m => m.totalPriceProduct);
             order.IdCourier = 1;
             order.IdClient = idCustomer;
@@ -168,13 +190,17 @@ namespace WebAppVsEat.Controllers
                 productordered.Quantity = product.quantity;
                 productordered.IdDish = product.dish.IdDish;
                 productordered.IdOrder = order1.IdOrder;
+                
 
                 Order_DishesManager.AddOrder_Dishes(productordered);
             }
 
+            var cart = new List<Cart>();
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
 
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Confirmation","Cart");
             
         }
 

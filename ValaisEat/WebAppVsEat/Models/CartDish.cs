@@ -12,6 +12,7 @@ namespace WebAppVsEat.Models
         public List<Cart> ListB { get; set; }
 
         public double price { get; set; }
+        
 
     }
 }
