@@ -170,8 +170,8 @@ namespace WebAppVsEat.Controllers
             Dish dish = DishManager.GetDish(id);
 
             int idResto = dish.IdRestaurant;
-
-            return RedirectToAction("Details/" + idResto);
+            
+            return RedirectToAction("Details/"+ idResto);
         }
 
 

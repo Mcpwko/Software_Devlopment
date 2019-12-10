@@ -40,7 +40,7 @@ namespace DAL
                             order = new Order_Dishes();
 
                             order.IdOrder = (int)dr["IdOrder"];
-                            order.IdDish = (int)dr["IdDishes"];
+                            order.IdDish = (int)dr["IdDish"];
                             order.Quantity = (int)dr["Quantity"];
 
                         }
@@ -68,17 +68,19 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into Order_Dishes(Quantity,IdDishes,IdOrder) VALUES(@Quantity,@IdDishes,@IdOrder)";
+                    string query = "INSERT into Order_Dishes(Quantity,IdDish,IdOrder) VALUES(@Quantity,@IdDish,@IdOrder)";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 
-
-                    cmd.Parameters.AddWithValue("@Status", order.Quantity);
-                    cmd.Parameters.AddWithValue("@Date", order.IdDish);
-                    cmd.Parameters.AddWithValue("@ShippingDate", order.IdOrder);
-
+                    
+                    cmd.Parameters.AddWithValue("@Quantity", order.Quantity);
+                    cmd.Parameters.AddWithValue("@IdDish", order.IdDish);
+                    cmd.Parameters.AddWithValue("@IdOrder", order.IdOrder);
+                    string valuer = query.ToString();
 
                     cn.Open();
+
+                    cmd.ExecuteScalar();
                 }
             }
             catch (Exception e)

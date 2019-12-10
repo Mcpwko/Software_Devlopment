@@ -39,25 +39,25 @@ namespace ConsoleApp
             }
 
 
-            var dishManager = new DishManager(Configuration);
 
-            List<Dish> dishes = new List<Dish>();
-
-            var dish = dishManager.GetDish(1);
-
-            var dish2 = dishManager.GetDish(2);
-
-            dishes.Add(dish);
-            dishes.Add(dish2);
-
-            Console.WriteLine(dish.ToString());
+            User user = new User();
+            user.Name = "Follonier";
+            user.Firstname = "Gregory";
+            user.Adress = "Chemin des Collombes 211";
+            user.Telephon = "023 322 25 65";
+            user.Email = "gregory@hes.ch";
+            user.Password = "password";
+            user.IdCity = 1;
+            user.Date = DateTime.Today;
 
 
+            var userManager = new UserManager(Configuration);
 
-            foreach (var plat in dishes)
-            {
-                Console.WriteLine(plat.ToString());
-            }
+            User user2 = userManager.AddUser(user);
+
+            Console.WriteLine(user2.IdUser);
+
+
 
 
 

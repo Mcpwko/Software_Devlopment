@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BLL
 {
-    public class OrderManager
+    public class OrderManager : IOrderManager
     {
         public IOrderDB orderDB { get; }
 
@@ -38,6 +38,25 @@ namespace BLL
         public int DeleteOrder(int idOrder)
         {
             return orderDB.DeleteOrder(idOrder);
+        }
+
+        public List<Order> GetOrdersByCourier(int id)
+        {
+            var orderslist = GetOrders();
+            var newlist = new List<Order>();
+
+            if (orderslist != null) { 
+            foreach(var order in orderslist)
+            {
+                if (order.IdCourier == id)
+                {
+                    newlist.Add(order);
+                }
+            }
+            }
+
+
+            return newlist;
         }
     }
 }

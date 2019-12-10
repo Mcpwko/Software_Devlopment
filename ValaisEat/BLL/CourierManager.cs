@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BLL
 {
-    public class CourierManager
+    public class CourierManager : ICourierManager
     {
         public ICourierDB courierDB { get; }
 
@@ -26,15 +26,20 @@ namespace BLL
             return courierDB.GetCourier(IdCourier);
         }
 
-        public int UpdateCourier(Courier courier)
+        public Courier GetCourierByUserId(int id)
         {
-            return courierDB.UpdateCourier(courier);
+            var users = GetCouriers();
+            var user = new Courier();
+
+            foreach(var user1 in users)
+            {
+                if (user1.IdUser == id)
+                    user = user1;
+            }
+
+            return user;
         }
-        
-        public int DeleteCourier(int idCourier)
-        {
-            return courierDB.DeleteCourier(idCourier);
-        }
+
 
     }
 }

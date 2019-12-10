@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BLL
 {
-    public class Order_DishesManager
+    public class Order_DishesManager : IOrder_DishesManager
     {
         public IOrder_DishesDB orderDishesDB { get; }
 
@@ -25,11 +25,11 @@ namespace BLL
         {
             return orderDishesDB.AddOrder_Dishes(order);
         }
-        public int UpdateOrder(Order_Dishes order)
+        public int UpdateOrder_Dishes(Order_Dishes order)
         {
             return orderDishesDB.UpdateOrder_Dishes(order);
         }
-        public int DeleteOrder(int idOrder)
+        public int DeleteOrder_Dishes(int idOrder)
         {
             return orderDishesDB.DeleteOrder_Dishes(idOrder);
         }

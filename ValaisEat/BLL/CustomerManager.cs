@@ -55,5 +55,20 @@ namespace BLL
             }
             return false;
         }
+
+        public int GetCustomerByIdUser(int id)
+        {
+            var list = GetCustomers();
+
+            foreach(var customer in list)
+            {
+                if (customer.IdUser == id)
+                {
+                    return customer.IdClient;
+                }
+                
+            }
+            return 0;
+        }
     }
 }

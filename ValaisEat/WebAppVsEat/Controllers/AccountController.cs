@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using BLL;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using DTO;
 
 namespace WebAppVsEat.Controllers
 {
@@ -14,11 +15,15 @@ namespace WebAppVsEat.Controllers
     public class AccountController : Controller
     {
 
-        private IConfiguration Configuration { get; }
+        private IOrderManager OrderManager { get; set; }
+        private IUserManager UserManager { get; set; }
+        private ICourierManager CourierManager { get; set; }
 
-        public AccountController(IConfiguration configuration)
+        public AccountController(IOrderManager orderManager, IUserManager userManager, ICourierManager courierManager)
         {
-            Configuration = configuration;
+            OrderManager = orderManager;
+            UserManager = userManager;
+            CourierManager = courierManager;
         }
         [Authorize(Roles = "Customer")]
         // GET: Account
@@ -28,99 +33,21 @@ namespace WebAppVsEat.Controllers
         }
         [Authorize(Roles = "Deliver")]
         // GET: Account/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Deliver()
         {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Details(DTO.User u)
-        {
-            DTO.User user = u;
-            return View();
-        }
+            string name = User.Identity.Name;
+            User user = UserManager.GetUserByEmail(name);
+            Courier courier = CourierManager.GetCourierByUserId(user.IdUser);
 
-        // GET: Account/Create
-        public ActionResult Register()
-        {
-            return View();
-        }
+            var orderslist = new List<Order>();
 
-
-        public ActionResult SignUp()
-        {
-            return View();
-        }
-
-        public ActionResult Login()
-        {
-            /**HttpContext.Session.SetString("Email",Username);*/
-            return View();
-        }
-
-        // POST: Account/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(DTO.User u)
-        {
-            try
+            if (OrderManager.GetOrdersByCourier(courier.IdCourier)!= null)
             {
-                UserManager um = new UserManager(Configuration);
-                um.AddUser(u);
-                // TODO: Add insert logic here
+                orderslist = OrderManager.GetOrdersByCourier(courier.IdCourier);
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View(orderslist);
         }
 
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

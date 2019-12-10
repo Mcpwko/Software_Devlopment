@@ -42,7 +42,7 @@ namespace DAL
                             order.Status = (string)dr["Status"];
                             order.Date = (DateTime)dr["Date"];
                             order.ShippingDate = (DateTime)dr["ShippingDate"];
-                            order.TotalPrice = (int)dr["TotalPrice"];
+                            order.TotalPrice = (double)dr["TotalPrice"];
                             order.IdCourier = (int)dr["IdCourier"];
                             order.IdClient = (int)dr["IdClient"];
 
@@ -73,7 +73,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "SELECT * FROM Order";
+                    string query = "SELECT * FROM [Order]";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
                     cn.Open();
@@ -91,7 +91,7 @@ namespace DAL
                             order.Status = (string)dr["Status"];
                             order.Date = (DateTime)dr["Date"];
                             order.ShippingDate = (DateTime)dr["ShippingDate"];
-                            order.TotalPrice = (int)dr["TotalPrice"];
+                            order.TotalPrice = (double)dr["TotalPrice"];
                             order.IdCourier = (int)dr["IdCourier"];
                             order.IdClient = (int)dr["IdClient"];
 
@@ -120,7 +120,7 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "INSERT into Order(Status,Date,ShippingDate,TotalPrice,IdCourier,IdClient) VALUES(@Status,@Date,@ShippingDate,@TotalPrice,@IdCourier,@IdClient);SELECT SCOPE_IDENTITY()";
+                    string query = "INSERT into [Order](Status,Date,ShippingDate,TotalPrice,IdCourier,IdClient) VALUES(@Status,@Date,@ShippingDate,@TotalPrice,@IdCourier,@IdClient);SELECT SCOPE_IDENTITY()";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
 

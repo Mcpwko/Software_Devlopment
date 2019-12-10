@@ -8,8 +8,6 @@ namespace BLL
     {
         List<Courier> GetCouriers();
         Courier GetCourier(int IdCourier);
-        Courier AddCourier(Courier courier);
-        int UpdateCourier(Courier courier);
-        int DeleteCourier(int IdCourier);
+        Courier GetCourierByUserId(int id);
     }
 }

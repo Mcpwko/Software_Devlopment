@@ -62,6 +62,15 @@ namespace WebAppVsEat
             services.AddScoped<IDishManager, DishManager>();
             services.AddScoped<IDishDB, DishDB>();
 
+            services.AddScoped<IOrderManager, OrderManager>();
+            services.AddScoped<IOrderDB, OrderDB>();
+
+            services.AddScoped<IOrder_DishesManager, Order_DishesManager>();
+            services.AddScoped<IOrder_DishesDB, Order_DishesDB>();
+
+            services.AddScoped<ICourierManager, CourierManager>();
+            services.AddScoped<ICourierDB, CourierDB>();
+
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

@@ -13,5 +13,7 @@ namespace BLL
         int DeleteCustomer(int idClient);
 
         bool IsACustomer(User user);
+
+        int GetCustomerByIdUser(int id);
     }
 }

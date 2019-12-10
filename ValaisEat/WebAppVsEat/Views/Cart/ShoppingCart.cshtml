@@ -1,56 +1,206 @@
-﻿@model IEnumerable<DTO.Dish>
+﻿@model IEnumerable<WebAppVsEat.Models.Cart>
 
-@{
-    ViewData["Title"] = "ShoppingCart";
+
+
+<style>
+    .login-page {
+        width: 660px;
+        padding: 8% 0 0;
+        margin: auto;
+    }
+
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #FFFFFF;
+        max-width: 530px;
+        margin: 0 auto 120px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            outline: 0;
+            background: #b91615;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: #FFFFFF;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+            .form button:hover, .form button:active, .form button:focus {
+                background: #b3b3b3;
+            }
+
+        .form .message {
+            margin: 15px 0 0;
+            color: #b3b3b3;
+            font-size: 12px;
+        }
+
+            .form .message a {
+                color: #b91615;
+                text-decoration: none;
+            }
+
+    .container2 {
+        position: relative;
+        z-index: 1;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+        .container2:before, .container2:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .container2 .info {
+            margin: 50px auto;
+            text-align: center;
+        }
+
+            .container2 .info h1 {
+                margin: 0 0 15px;
+                padding: 0;
+                font-size: 36px;
+                font-weight: 300;
+                color: #1a1a1a;
+            }
+
+            .container2 .info span {
+                color: #4d4d4d;
+                font-size: 12px;
+            }
+
+                .container2 .info span a {
+                    color: #000000;
+                    text-decoration: none;
+                }
+
+                .container2 .info span .fa {
+                    color: #EF3B3A;
+                }
+
+    .bg2 {
+        /* The image used */
+        background-image: url("../../wwwroot/images/LOGINSpaghetti.jpg");
+        /* Full height */
+        height: 100%;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
+
+
+
+
+@if (!Model.Any())
+{
+    <h1>
+        ShoppingCart
+    </h1>
+    <h2>Your Cart is empty !</h2>
 }
+else
+{
 
-<h2>ShoppingCart</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdRestaurant)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdRestaurant)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+
+    <div class="login-page ">
+        <div class="form">
+
+            <form class="login-form">
+                <h1>Shopping Cart</h1>
+
+                <table class="table" style="background-color:lightgrey;">
+                    <thead>
+                        <tr>
+                            <th style="background-color:#3d3a3a; color:white;">
+                                Name
+                            </th>
+                            <th style="background-color:#3d3a3a; color:white; padding-left:20px;padding-right:20px;">
+                                Price
+                            </th>
+                            <th style="background-color:#3d3a3a; color:white;  padding-left:30px;padding-right:30px;">
+                                Quantité
+                            </th>
+                            <th style="background-color:#3d3a3a; color:white;padding-left:20px; padding-right:20px;">
+                                Total
+                            </th>
+                            <th style="background-color:#3d3a3a;">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="vertical-align:middle">
+                                    @Html.DisplayFor(modelItem => item.dish.Name)
+                                </td>
+                                <td style="vertical-align:middle">
+                                    @Html.DisplayFor(modelItem => item.dish.Price) CHF
+                                </td>
+                                <td style="vertical-align:middle">
+                                    <a style="background-color:#aa1515; height:20px; width:20px;display: inline-block;" href="@Url.Action("RemoveItem", "Cart", new{ id = item.dish.IdDish })">
+                                        <span>
+                                            <strong class="glyphicon glyphicon-minus" style="color:white;"></strong>
+                                        </span>
+                                    </a>
+                                    <label style="width:30px;">@item.quantity</label>
+                                    <a style="background-color:#aa1515; height:20px; width:20px;display: inline-block;" href="@Url.Action("AddItem", "Cart", new{ id = item.dish.IdDish })">
+                                        <span>
+                                            <strong class="glyphicon glyphicon-plus" style="color:white;"></strong>
+                                        </span>
+                                    </a>
+                                </td>
+                                <td style="vertical-align:middle">
+                                    @item.totalPriceProduct CHF
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("RemoveAllItems", "Cart", new{ id = item.dish.IdDish })" class="btn" style="background-color:#aa1515;">
+                                        <span>
+                                            <strong class="glyphicon glyphicon-trash" style="color:white;"></strong>
+                                        </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="5"><strong>@Model.Sum(m => m.totalPriceProduct) CHF</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button asp-area="" asp-controller="Cart" asp-action="Order">Order</button>
+
+
+
+            </form>
+        </div>
+    </div>
+
 }
-    </tbody>
-</table>
