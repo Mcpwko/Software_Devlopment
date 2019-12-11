@@ -70,7 +70,7 @@
                     string name = User.Identity.Name;
                     if (User.IsInRole("Customer"))
                     {
-                        <a asp-area="" asp-controller="Account" asp-action="Index"><span class="glyphicon glyphicon-user"></span> @name  </a>
+                        <a asp-area="" asp-controller="Account" asp-action="Customer"><span class="glyphicon glyphicon-user"></span> @name  </a>
                     }
                     else
                     {

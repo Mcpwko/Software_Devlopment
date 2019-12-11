@@ -40,23 +40,13 @@ namespace ConsoleApp
 
 
 
-            User user = new User();
-            user.Name = "Follonier";
-            user.Firstname = "Gregory";
-            user.Adress = "Chemin des Collombes 211";
-            user.Telephon = "023 322 25 65";
-            user.Email = "gregory@hes.ch";
-            user.Password = "password";
-            user.IdCity = 1;
-            user.Date = DateTime.Today;
+            var orderManager = new OrderManager(Configuration);
 
+            var order = orderManager.GetOrder(14);
 
-            var userManager = new UserManager(Configuration);
+            double chiffre = (order.ShippingDate.TimeOfDay.TotalMinutes- DateTime.Now.TimeOfDay.TotalMinutes);
 
-            User user2 = userManager.AddUser(user);
-
-            Console.WriteLine(user2.IdUser);
-
+            Console.WriteLine(chiffre);
 
 
 

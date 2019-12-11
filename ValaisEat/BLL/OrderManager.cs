@@ -46,13 +46,33 @@ namespace BLL
             var newlist = new List<Order>();
 
             if (orderslist != null) { 
-            foreach(var order in orderslist)
-            {
-                if (order.IdCourier == id)
+                foreach(var order in orderslist)
                 {
-                    newlist.Add(order);
+                    if (order.IdCourier == id)
+                    {
+                        newlist.Add(order);
+                    }
                 }
             }
+
+
+            return newlist;
+        }
+
+        public List<Order> GetOrdersByCustomer(int id)
+        {
+            var orderslist = GetOrders();
+            var newlist = new List<Order>();
+
+            if (orderslist != null)
+            {
+                foreach (var order in orderslist)
+                {
+                    if (order.IdClient == id)
+                    {
+                        newlist.Add(order);
+                    }
+                }
             }
 
 
@@ -74,7 +94,12 @@ namespace BLL
 
         }
 
+        public int GetNumberOfOrder(int id)
+        {
+            return orderDB.GetNumberOfOrder(id);
+        }
 
-        
+
+
     }
 }

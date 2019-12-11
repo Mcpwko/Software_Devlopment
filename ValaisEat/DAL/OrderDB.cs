@@ -214,6 +214,46 @@ namespace DAL
             return result;
         }
 
+        public int GetNumberOfOrder(int id)
+        {
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            int result =0;
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+
+                    string query = "SELECT COUNT(IdOrder)FROM [Order]WHERE ShippingDate <=dateadd(minute, +1, GetDate()) AND ShippingDate>=dateadd(minute,0,GETDATE()) AND IdCourier=@IdCourier GROUP BY IdCourier ";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@IdCourier", id);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+
+                            result = (int)dr[0];
+
+
+
+
+
+                        }
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
 
 
 

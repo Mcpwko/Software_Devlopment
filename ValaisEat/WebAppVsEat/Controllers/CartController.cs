@@ -171,10 +171,27 @@ namespace WebAppVsEat.Controllers
 
             var users = UserManager.GetUsersByIdCity(idcity);
 
-            var couriers = CourierManager.GetCouriersByUserIdSameCity(users);
+            var couriers = CourierManager.GetCouriersByUserIdSameCity(users); //NE MARCHE PAS A REPARER JEUDI
 
+            /**if (!couriers.Any())
+            {
+                return View();//PAS DE LIVREUR DISPONIBLE
+            }*/
 
+            var orders = OrderManager.GetOrders();
+            List<Courier> courierFree = new List<Courier>();
 
+            foreach (var courier in couriers)
+            {
+                
+                if (OrderManager.GetNumberOfOrder(courier.IdCourier) < 5)
+                {
+                    courierFree.Add(courier);
+                }
+            }
+            var courriers = CourierManager.GetCouriers();
+            //@author : DeadEcho COEUR COEUR
+            OrderManager.GetNumberOfOrder(courriers[0].IdCourier);
 
             string tspan = Convert.ToString(deliverytime);
             DateTime dt = DateTime.Now;

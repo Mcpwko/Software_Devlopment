@@ -18,18 +18,33 @@ namespace WebAppVsEat.Controllers
         private IOrderManager OrderManager { get; set; }
         private IUserManager UserManager { get; set; }
         private ICourierManager CourierManager { get; set; }
+        private ICustomerManager CustomerManager { get; set; }
 
-        public AccountController(IOrderManager orderManager, IUserManager userManager, ICourierManager courierManager)
+        public AccountController(IOrderManager orderManager, IUserManager userManager, ICourierManager courierManager,ICustomerManager customerManager)
         {
             OrderManager = orderManager;
             UserManager = userManager;
             CourierManager = courierManager;
+            CustomerManager = customerManager;
         }
         [Authorize(Roles = "Customer")]
         // GET: Account
-        public ActionResult Index()
+        public ActionResult Customer()
         {
-            return View();
+            string name = User.Identity.Name;
+            User user = UserManager.GetUserByEmail(name);
+            int idcustomer = CustomerManager.GetCustomerByIdUser(user.IdUser);
+
+            var orderslist = new List<Order>();
+
+            if (OrderManager.GetOrdersByCustomer(idcustomer) != null)
+            {
+                orderslist = OrderManager.GetOrdersByCustomer(idcustomer);
+            }
+
+            var descendingOrder = orderslist.OrderByDescending(i => i.IdOrder);
+
+            return View(descendingOrder);
         }
 
         public ActionResult Deliver()
