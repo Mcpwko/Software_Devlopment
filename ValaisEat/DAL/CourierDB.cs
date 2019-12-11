@@ -195,5 +195,49 @@ namespace DAL
             return result;
 
         }
-    }
+
+
+        public List<Courier> GetFreeCouriers()
+        {
+            List<Courier> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT * FROM Courier";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Courier>();
+
+                            Courier courier = new Courier();
+
+                            courier.IdCourier = (int)dr["IdCourier"];
+                            courier.IdUser = (int)dr["IdUser"];
+
+
+                            results.Add(courier);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
+
+
+
+        }
 }

@@ -81,7 +81,28 @@ namespace BLL
         }
 
 
-        
+        public int GetCityFromUser(int id)
+        {
+            User user = GetUser(id);
+            int city = user.IdCity;
+
+            return city;
+
+        }
+
+        public List<User> GetUsersByIdCity(int id)
+        {
+            var users = GetUsers();
+            var userInTheSameCity = new List<User>();
+
+            foreach(var user in users)
+            {
+                if (user.IdCity == id)
+                    userInTheSameCity.Add(user);
+            }
+
+            return userInTheSameCity;
+        }
 
     }
 }

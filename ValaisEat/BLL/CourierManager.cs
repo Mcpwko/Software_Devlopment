@@ -40,6 +40,25 @@ namespace BLL
             return user;
         }
 
+        public List<Courier> GetCouriersByUserIdSameCity(List<User> users)
+        {
+
+            var couriers = new List<Courier>();
+
+            foreach(var user in users)
+            {
+                if (GetCourierByUserId(user.IdUser).IdCourier!=0)
+                {
+                    var courier = GetCourierByUserId(user.IdUser);
+                    couriers.Add(courier);
+                }
+                    
+            }
+
+            return couriers;
+        }
+
+
 
     }
 }

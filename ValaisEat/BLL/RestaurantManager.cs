@@ -28,5 +28,12 @@ namespace BLL
             return restaurantDB.GetRestaurant(id);
         }
 
+        public int GetCityFromRestaurant(int id)
+        {
+            Restaurant resto = GetRestaurant(id);
+            int idcity = resto.IdCity;
+            return idcity;
+        }
+
     }
 }

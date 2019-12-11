@@ -12,5 +12,6 @@ namespace BLL
         bool VerificateAuthentification(string username, string password);
         User GetUserByEmail(string email);
         bool UserAlreadyExist(string email);
+        List<User> GetUsersByIdCity(int id);
     }
 }

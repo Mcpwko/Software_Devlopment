@@ -21,8 +21,9 @@ namespace WebAppVsEat.Controllers
         private ICustomerManager CustomerManager { get; set; }
         private IOrderManager OrderManager { get; set; }
         private IOrder_DishesManager Order_DishesManager { get; set; }
+        private IRestaurantManager RestaurantManager { get; set; }
 
-        public CartController(IDishManager dishManager, ICourierManager courierManager,IUserManager userManager, ICustomerManager customerManager, IOrderManager orderManager, IOrder_DishesManager order_DishesManager)
+        public CartController(IDishManager dishManager, ICourierManager courierManager,IUserManager userManager, ICustomerManager customerManager, IOrderManager orderManager, IOrder_DishesManager order_DishesManager,IRestaurantManager restaurantManager)
         {
             DishManager = dishManager;
             CourierManager = courierManager;
@@ -30,6 +31,7 @@ namespace WebAppVsEat.Controllers
             CustomerManager = customerManager;
             OrderManager = orderManager;
             Order_DishesManager = order_DishesManager;
+            RestaurantManager = restaurantManager;
         }
         // GET: Cart
         public ActionResult Index()
@@ -163,7 +165,16 @@ namespace WebAppVsEat.Controllers
             int idCustomer = CustomerManager.GetCustomerByIdUser(user.IdUser);
             var cartlists = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
 
-            var courrierlist = CourierManager.GetCouriers();
+            int idresto = cartlists[0].dish.IdRestaurant;
+
+            var idcity = RestaurantManager.GetCityFromRestaurant(idresto);
+
+            var users = UserManager.GetUsersByIdCity(idcity);
+
+            var couriers = CourierManager.GetCouriersByUserIdSameCity(users);
+
+
+
 
             string tspan = Convert.ToString(deliverytime);
             DateTime dt = DateTime.Now;

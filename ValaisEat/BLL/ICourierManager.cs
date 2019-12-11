@@ -9,5 +9,6 @@ namespace BLL
         List<Courier> GetCouriers();
         Courier GetCourier(int IdCourier);
         Courier GetCourierByUserId(int id);
+        List<Courier> GetCouriersByUserIdSameCity(List<User> users);
     }
 }

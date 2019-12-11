@@ -67,5 +67,14 @@ namespace BLL
             UpdateOrder(order);
 
         }
+
+        public void NumberOfOrderByCourrierLast30Minutes(int id)
+        {
+            GetOrdersByCourier(id);
+
+        }
+
+
+        
     }
 }
