@@ -13,6 +13,7 @@ namespace WebAppVsEat.Models
         public double totalPriceProduct { get; set; }
 
         public TimeSpan date { get; set; }
+        
 
     }
 }

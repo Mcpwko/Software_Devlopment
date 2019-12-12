@@ -197,7 +197,7 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "DELETE FROM Order WHERE IdOrder=@IdOrder";
+                    string query = "DELETE FROM [Order] WHERE IdOrder=@IdOrder";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IdOrder", idOrder);
 
@@ -224,7 +224,7 @@ namespace DAL
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "SELECT COUNT(IdOrder)FROM [Order]WHERE ShippingDate <=dateadd(minute, +1, GetDate()) AND ShippingDate>=dateadd(minute,0,GETDATE()) AND IdCourier=@IdCourier GROUP BY IdCourier ";
+                    string query = "SELECT COUNT(IdOrder)FROM [Order]WHERE ShippingDate <=dateadd(minute, +30, GetDate()) AND ShippingDate>=dateadd(minute,0,GETDATE()) AND IdCourier=@IdCourier AND Status='Not delivered' GROUP BY IdCourier ";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IdCourier", id);
 

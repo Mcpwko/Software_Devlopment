@@ -173,10 +173,10 @@ namespace WebAppVsEat.Controllers
 
             var couriers = CourierManager.GetCouriersByUserIdSameCity(users); //NE MARCHE PAS A REPARER JEUDI
 
-            /**if (!couriers.Any())
+            if (!couriers.Any())
             {
-                return View();//PAS DE LIVREUR DISPONIBLE
-            }*/
+                return RedirectToAction("NoFreeCourier");//PAS DE LIVREUR DISPONIBLE
+            }
 
             var orders = OrderManager.GetOrders();
             List<Courier> courierFree = new List<Courier>();
@@ -189,6 +189,12 @@ namespace WebAppVsEat.Controllers
                     courierFree.Add(courier);
                 }
             }
+
+            if (!courierFree.Any())
+            {
+                return RedirectToAction("NoFreeCourier");//PAS DE LIVREUR DISPONIBLE
+            }
+
             var courriers = CourierManager.GetCouriers();
             //@author : DeadEcho COEUR COEUR
             OrderManager.GetNumberOfOrder(courriers[0].IdCourier);
@@ -196,6 +202,8 @@ namespace WebAppVsEat.Controllers
             string tspan = Convert.ToString(deliverytime);
             DateTime dt = DateTime.Now;
             DateTime ts = DateTime.Parse(tspan);
+
+            
 
 
 
@@ -205,7 +213,7 @@ namespace WebAppVsEat.Controllers
             order.Date = dt;
             order.ShippingDate = ts;
             order.TotalPrice = cartlists.Sum(m => m.totalPriceProduct);
-            order.IdCourier = 1;
+            order.IdCourier = courierFree[0].IdCourier;
             order.IdClient = idCustomer;
 
             Order order1 = OrderManager.AddOrder(order);
@@ -234,6 +242,11 @@ namespace WebAppVsEat.Controllers
 
 
         public ActionResult Confirmation()
+        {
+            return View();
+        }
+
+        public ActionResult NoFreeCourier()
         {
             return View();
         }

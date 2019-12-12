@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WebAppVsEat.Models.Cart>
+
+@{
+    ViewData["Title"] = "DetailsOrder";
+}
+
+<h2>DetailsOrder</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.totalPriceProduct)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem =>item.dish.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.totalPriceProduct) CHF
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+        <tr>
+            <td><strong>@Model.Sum(m => m.totalPriceProduct) CHF</strong></td>
+        </tr>
+    </tbody>
+</table>

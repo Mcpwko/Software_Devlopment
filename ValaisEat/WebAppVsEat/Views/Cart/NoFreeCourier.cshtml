@@ -1,15 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "Confirmation";
+    ViewData["Title"] = "NoFreeCourier";
 }
 
-<h2 style="font:bold;font-size:50px">Thank you for your order!</h2>
-<span>Your order number is : </span>
-<span>Your order will arrive at :</span>
+<h2 style="font-size:50px; font:bold">Sorry !</h2>
+<p>We could not find any courier that is available, please try again later !</p>
 
 <a href="@Url.Action("Index", "Home")" class="btn" style="background-color:#aa1515;">
     <span>
         <strong class="glyphicon glyphicon-trash" style="color:white;">Return to Home</strong>
     </span>
 </a>
-

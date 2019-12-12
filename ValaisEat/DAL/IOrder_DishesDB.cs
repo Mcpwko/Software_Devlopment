@@ -10,7 +10,7 @@ namespace DAL
     {
         IConfiguration Configuration { get; }
 
-        Order_Dishes GetOrder_Dishes(int id);
+        List<Order_Dishes> GetOrder_Dishes(int id);
         Order_Dishes AddOrder_Dishes(Order_Dishes order_dishes);
         int UpdateOrder_Dishes(Order_Dishes order_dishes);
         int DeleteOrder_Dishes(int idOrder);

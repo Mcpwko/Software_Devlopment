@@ -19,7 +19,7 @@
             <th style="background-color:#3d3a3a; color:white;">
                 Name
             </th>
-            <th style="background-color:#3d3a3a; color:white;">
+            <th style="background-color:#3d3a3a; color:white;width:500px">
                 Description
             </th>
             <th style="background-color:#3d3a3a; color:white;">
@@ -246,8 +246,8 @@ else
                             <td colspan="5"><strong>@Model.ListB.Sum(m => m.totalPriceProduct) CHF</strong></td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="text-align:center">Choose a time for the delivery</td>
-                            <td colsplan="3">
+                            <td colspan="3" style="text-align:center; vertical-align:middle">Choose a time for the delivery :</td>
+                            <td colsplan="2">
                                 <input type="time" name="deliverytime" min="@ViewBag.Time" value="@ViewBag.Time" max="22:45" step="900" />
                             </td>
                                 

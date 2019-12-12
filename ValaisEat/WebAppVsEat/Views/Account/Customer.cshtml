@@ -3,13 +3,15 @@
 @{
     ViewData["Title"] = "Deliver";
 }
-    <h2>WELCOME ABORD NEW CUSTOMER CALLED @User.Identity.Name</h2>
+<h2>WELCOME ABORD NEW CUSTOMER CALLED @User.Identity.Name</h2>
 
+<h1>Incoming Deliveries</h1>
 @if (Model.Any())
 {
-    <table class="table">
+
+    <table class="table" style="background-color:lightgrey">
         <thead>
-            <tr>
+            <tr style="background-color:#3d3a3a; color:white;">
                 <th>
                     @Html.DisplayNameFor(model => model.IdOrder)
                 </th>
@@ -25,42 +27,120 @@
                 <th>
                     @Html.DisplayNameFor(model => model.TotalPrice)
                 </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.Status.Equals("Not delivered"))
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShippingDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalPrice) CHF
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.IdOrder })" class="btn" style="background-color:#aa1515;">
+                                <span>
+                                    <strong style="color:white;">Details</strong>
+                                </span>
+                            </a>
+
+                        </td>
+                        @if (item.Status.Equals("Not delivered") && (item.ShippingDate.Date == DateTime.Now.Date) && (item.ShippingDate.TimeOfDay.TotalMinutes - DateTime.Now.TimeOfDay.TotalMinutes) >= 180)
+                        {
+                            <td>
+                                <a href="@Url.Action("DeleteOrder", "Account", new{ id = item.IdOrder })">
+                                    <span>
+                                        <strong style="color:#ef1616;">  Delete Order</strong>
+                                    </span>
+                                </a>
+                            </td>
+
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+    
+
+
+    <h1>Previous Orders</h1>
+    <table class="table" style="background-color:lightgrey">
+        <thead>
+            <tr style="background-color:#3d3a3a; color:white;">
                 <th>
-                    @Html.DisplayNameFor(model => model.IdClient)
+                    @Html.DisplayNameFor(model => model.IdOrder)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShippingDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TotalPrice)
                 </th>
                 <th></th>
             </tr>
         </thead>
+
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdOrder)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ShippingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalPrice) CHF
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdClient)
-                </td>
-                
-                @if (item.Status.Equals("Not delivered") && (item.ShippingDate.TimeOfDay.TotalMinutes- DateTime.Now.TimeOfDay.TotalMinutes) >= 180)
+                @if (item.Status.Equals("Completed"))
                 {
-                    <td>
-                        @Html.ActionLink("Delete the order", "ConfirmDelivery", new { id = item.IdOrder })
-                    </td>
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShippingDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalPrice) CHF
+                        </td>
+                        <td>
+                            @Html.ActionLink("Details", "DetailsOrder", new { id = item.IdOrder })
+                        </td>
+
+                        @if (item.Status.Equals("Not delivered") && (item.ShippingDate.Date == DateTime.Now.Date) && (item.ShippingDate.TimeOfDay.TotalMinutes - DateTime.Now.TimeOfDay.TotalMinutes) >= 180)
+                        {
+                            <td>
+                                @Html.ActionLink("Delete the order", "DeleteOrder", new { id = item.IdOrder })
+                            </td>
+
+                        }
+                    </tr>
                 }
-            </tr>
             }
         </tbody>
     </table>

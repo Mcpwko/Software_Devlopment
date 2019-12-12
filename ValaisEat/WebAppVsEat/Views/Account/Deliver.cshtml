@@ -8,9 +8,9 @@
 
 @if (Model.Any())
 {
-<table class="table">
+<table class="table" style="background-color:lightgrey">
     <thead>
-        <tr>
+        <tr style="background-color:#3d3a3a; color:white;">
             <th>
                 @Html.DisplayNameFor(model => model.IdOrder)
             </th>
@@ -29,6 +29,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.IdClient)
             </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
@@ -54,10 +55,18 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdClient)
             </td>
-            @if (!item.Status.Equals("Completed")) { 
             <td>
-                @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.IdOrder })
+                <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.IdOrder })" class="btn" style="background-color:#aa1515;">
+                    <span>
+                        <strong style="color:white;">Details</strong>
+                    </span>
+                </a>
             </td>
+            @if (!item.Status.Equals("Completed"))
+            {
+                <td>
+                    @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.IdOrder })
+                </td>
             }
         </tr>
 }

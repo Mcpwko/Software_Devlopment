@@ -16,9 +16,9 @@ namespace DAL
         }
 
 
-        public Order_Dishes GetOrder_Dishes(int id)
+        public List<Order_Dishes> GetOrder_Dishes(int id)
         {
-            Order_Dishes order = null;
+            List<Order_Dishes> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
@@ -28,21 +28,25 @@ namespace DAL
                 {
                     string query = "SELECT * FROM Order_Dishes WHERE IdOrder = @IdOrder";
                     SqlCommand cmd = new SqlCommand(query, cn);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@IdOrder", id);
 
                     cn.Open();
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        if (dr.Read())
+                        while (dr.Read())
                         {
+                            if (results == null)
+                                results = new List<Order_Dishes>();
 
-                            order = new Order_Dishes();
+                            Order_Dishes order = new Order_Dishes();
 
                             order.IdOrder = (int)dr["IdOrder"];
                             order.IdDish = (int)dr["IdDish"];
                             order.Quantity = (int)dr["Quantity"];
 
+
+                            results.Add(order);
                         }
                     }
                 }
@@ -52,7 +56,7 @@ namespace DAL
                 throw e;
             }
 
-            return order;
+            return results;
 
         }
 

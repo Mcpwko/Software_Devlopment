@@ -44,7 +44,6 @@ namespace DAL
                             dish.Description = (string)dr["Description"];
                             dish.Price = (double)dr["Price"];
                             dish.Title = (string)dr["Title"];
-                            dish.Status = (string)dr["Status"];
                             dish.IdRestaurant = (int)dr["IdRestaurant"];
 
 
@@ -93,7 +92,6 @@ namespace DAL
                             dish.Description = (string)dr["Description"];
                             dish.Price = (double)dr["Price"];
                             dish.Title = (string)dr["Title"];
-                            dish.Status = (string)dr["Status"];
                             dish.IdRestaurant = (int)dr["IDRestaurant"];
 
 
