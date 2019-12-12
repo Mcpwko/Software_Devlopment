@@ -4,19 +4,19 @@
     ViewData["Title"] = "DetailsOrder";
 }
 
-<h2>DetailsOrder</h2>
+<h1>Details of the order</h1>
 
-<table class="table">
+<table class="table" style="background-color:lightgrey">
     <thead>
-        <tr>
+        <tr style="background-color:#3d3a3a; color:white;">
             <th>
                 Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.quantity)
+                Quantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.totalPriceProduct)
+                Product Price
             </th>
             <th></th>
         </tr>
@@ -34,14 +34,11 @@
                 @Html.DisplayFor(modelItem => item.totalPriceProduct) CHF
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }
         <tr>
-            <td><strong>@Model.Sum(m => m.totalPriceProduct) CHF</strong></td>
+            <td colspan="4"><strong>Total Price : @Model.Sum(m => m.totalPriceProduct) CHF</strong></td>
         </tr>
     </tbody>
 </table>

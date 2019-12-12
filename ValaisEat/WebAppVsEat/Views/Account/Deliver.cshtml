@@ -1,77 +1,123 @@
-﻿@model IEnumerable<DTO.Order>
+﻿@model WebAppVsEat.Models.DeliverData
 
 @{
     ViewData["Title"] = "Deliver";
 }
 
-<h2>Deliver</h2>
+<h1 style="font:bolder 50px arial">My Account</h1>
+<h2 style="font:bolder 40px arial">Personal Data</h2>
 
-@if (Model.Any())
+
+
+<p>
+    <b>Firstname</b>
+    <text style="padding-left:16px;">@Model.user.Firstname</text>
+</p>
+<p>
+    <b>Name</b>
+    <text style="padding-left:43px"> @Model.user.Name</text>
+</p>
+<p>
+    <b>Address</b>
+    <text style="padding-left:25px"> @Model.user.Adress</text>
+</p>
+<p>
+    <b>City</b>
+    <text style="padding-left:55px"> @Model.city.NPA</text>
+    <text>@Model.city.CityName</text>
+</p>
+<p>
+    <b>Email</b>
+    <text style="padding-left:43px"> @Model.user.Email</text>
+</p>
+<p>
+    <b>Telephone</b>
+    <text style="padding-left:10px">@Model.user.Telephon</text>
+</p>
+
+
+
+
+<h2 style="font:bolder 40px arial">Your deliveries</h2>
+
+@if (Model.orderlist.Any())
 {
-<table class="table" style="background-color:lightgrey">
-    <thead>
-        <tr style="background-color:#3d3a3a; color:white;">
-            <th>
-                @Html.DisplayNameFor(model => model.IdOrder)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ShippingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdClient)
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdOrder)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShippingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalPrice) CHF
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdClient)
-            </td>
-            <td>
-                <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.IdOrder })" class="btn" style="background-color:#aa1515;">
-                    <span>
-                        <strong style="color:white;">Details</strong>
-                    </span>
-                </a>
-            </td>
-            @if (!item.Status.Equals("Completed"))
+    <table class="table" style="background-color:lightgrey">
+        <thead>
+            <tr style="background-color:#3d3a3a; color:white;">
+                <th>
+                    No Order
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Date of Order
+                </th>
+                <th>
+                    Delivery Date
+                </th>
+                <th>
+                    Total Price
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    City
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.orderlist)
             {
+            <tr>
                 <td>
-                    @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.IdOrder })
+                    @Html.DisplayFor(modelItem => item.order.IdOrder)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.ShippingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.order.TotalPrice) CHF
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.Firstname) @Html.DisplayFor(modelItem => item.user.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.user.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.city.NPA) @Html.DisplayFor(modelItem => item.city.CityName)
+                </td>
+                <td>
+                    <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.order.IdOrder })" class="btn" style="background-color:#aa1515;">
+                        <span>
+                            <strong style="color:white;">Details</strong>
+                        </span>
+                    </a>
+                </td>
+                @if (!item.order.Status.Equals("Completed"))
+                {
+                    <td>
+                        @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.order.IdOrder })
+                    </td>
+                }
+            </tr>
             }
-        </tr>
-}
-    </tbody>
-</table>
+        </tbody>
+    </table>
 }
 else
 {

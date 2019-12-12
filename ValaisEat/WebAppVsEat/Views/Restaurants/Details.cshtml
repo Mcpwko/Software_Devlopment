@@ -10,7 +10,7 @@
     }
 </style>
 
-<h2>Dishes from @ViewBag.nameResto</h2>
+<h2 style="font:bolder 50px arial">@ViewBag.nameResto</h2>
 
 
 <table class="table" style="background-color:lightgrey">
@@ -48,10 +48,11 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
+                    @if (User.IsInRole("Customer")){
                     <button class="btn" style="background-color:#aa1515;">
                         @Html.ActionLink("Add to Cart", "AddItem", new { id = item.IdDish }, new { @class = "my-class" })
-
                     </button>
+                    }
                 </td>
             </tr>
         }
@@ -185,7 +186,7 @@ else
         <div class="form">
 
             <form class="login-form">
-                <h1>Shopping Cart</h1>
+                <h1 style="font:bolder 50px arial">Shopping Cart</h1>
 
                 <table class="table" style="background-color:lightgrey;">
                     <thead>
@@ -197,7 +198,7 @@ else
                                 Price
                             </th>
                             <th style="background-color:#3d3a3a; color:white;  padding-left:30px;padding-right:30px;">
-                                Quantité
+                                Quantity
                             </th>
                             <th style="background-color:#3d3a3a; color:white;padding-left:20px; padding-right:20px;">
                                 Total

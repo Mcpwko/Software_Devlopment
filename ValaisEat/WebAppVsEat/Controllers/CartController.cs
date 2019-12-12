@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL;
 using DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAppVsEat.Models;
 
 namespace WebAppVsEat.Controllers
 {
-    
 
+    [Authorize(Roles = "Customer")]
     public class CartController : Controller
     {
 

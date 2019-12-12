@@ -12,7 +12,7 @@ using WebAppVsEat.Models;
 
 namespace WebAppVsEat.Controllers
 {
-    
+    [Authorize]
     public class AccountController : Controller
     {
 
@@ -22,8 +22,9 @@ namespace WebAppVsEat.Controllers
         private ICustomerManager CustomerManager { get; set; }
         private IOrder_DishesManager Order_DishesManager { get; set; }
         private IDishManager DishManager { get; set; }
+        private ICityManager CityManager { get; set; }
 
-        public AccountController(IOrderManager orderManager, IUserManager userManager, ICourierManager courierManager,ICustomerManager customerManager,IOrder_DishesManager order_DishesManager, IDishManager dishManager)
+        public AccountController(IOrderManager orderManager, IUserManager userManager, ICourierManager courierManager,ICustomerManager customerManager,IOrder_DishesManager order_DishesManager, IDishManager dishManager, ICityManager cityManager)
         {
             OrderManager = orderManager;
             UserManager = userManager;
@@ -31,6 +32,7 @@ namespace WebAppVsEat.Controllers
             CustomerManager = customerManager;
             Order_DishesManager = order_DishesManager;
             DishManager = dishManager;
+            CityManager = cityManager;
         }
         [Authorize(Roles = "Customer")]
         // GET: Account
@@ -48,8 +50,14 @@ namespace WebAppVsEat.Controllers
             }
 
             var descendingOrder = orderslist.OrderByDescending(i => i.IdOrder);
+            var personalData = new PersonalData();
+            var city = CityManager.GetCity(user.IdCity);
 
-            return View(descendingOrder);
+            personalData.orderlist = descendingOrder;
+            personalData.user = user;
+            personalData.city = city;
+
+            return View(personalData);
         }
 
         public ActionResult Deliver()
@@ -67,7 +75,26 @@ namespace WebAppVsEat.Controllers
 
             var descendingOrder = orderslist.OrderByDescending(i => i.IdOrder);
 
-            return View(descendingOrder);
+            var orderCustomer = new List<OrderCustomer>();
+            
+            foreach (var item in descendingOrder)
+            {
+                var order = new OrderCustomer();
+                order.order = item;
+                var customer = CustomerManager.GetCustomer(item.IdClient);
+                var customerdata = UserManager.GetUser(customer.IdUser);
+                order.user = customerdata;
+                order.city = CityManager.GetCity(customerdata.IdCity);
+
+                orderCustomer.Add(order);
+            }
+
+            var deliverData = new DeliverData();
+            deliverData.orderlist = orderCustomer;
+            deliverData.user = user;
+            deliverData.city = CityManager.GetCity(user.IdCity);
+
+            return View(deliverData);
         
         }
 

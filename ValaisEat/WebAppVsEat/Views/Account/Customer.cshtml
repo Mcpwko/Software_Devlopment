@@ -1,39 +1,70 @@
-﻿@model IEnumerable<DTO.Order>
+﻿@model WebAppVsEat.Models.PersonalData
 
 @{
     ViewData["Title"] = "Deliver";
 }
-<h2>WELCOME ABORD NEW CUSTOMER CALLED @User.Identity.Name</h2>
+<h1 style="font:bolder 50px arial">My Account</h1>
+<h2 style="font:bolder 40px arial">Personal Data</h2>
 
-<h1>Incoming Deliveries</h1>
-@if (Model.Any())
+
+
+<p>
+    <b>Firstname</b>  
+    <text style="padding-left:16px;">@Model.user.Firstname</text>
+</p>
+<p>
+    <b>Name</b>
+    <text style="padding-left:43px"> @Model.user.Name</text>
+    </p>
+<p>
+    <b>Address</b>
+    <text style="padding-left:25px"> @Model.user.Adress</text>
+</p>
+<p>
+    <b>City</b>
+    <text style="padding-left:55px"> @Model.city.NPA</text>
+    <text>@Model.city.CityName</text>
+</p>
+<p>
+    <b>Email</b>
+    <text style="padding-left:43px"> @Model.user.Email</text>
+</p>
+<p>
+    <b>Telephone</b> 
+    <text style="padding-left:10px">@Model.user.Telephon</text>
+</p>
+
+
+
+<h1 style="font:bolder 40px arial">Incoming Deliveries</h1>
+@if (Model.orderlist.Any())
 {
 
     <table class="table" style="background-color:lightgrey">
         <thead>
             <tr style="background-color:#3d3a3a; color:white;">
                 <th>
-                    @Html.DisplayNameFor(model => model.IdOrder)
+                    No. order
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    Status
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Date)
+                    Date of Order
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShippingDate)
+                    Delivery Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TotalPrice)
+                    Total Price
                 </th>
-                <th></th>
-                <th></th>
+                <th style="width:120px;"></th>
+                <th style="width:120px;"></th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.orderlist)
             {
                 @if (item.Status.Equals("Not delivered"))
                 {
@@ -64,13 +95,12 @@
                         </td>
                         @if (item.Status.Equals("Not delivered") && (item.ShippingDate.Date == DateTime.Now.Date) && (item.ShippingDate.TimeOfDay.TotalMinutes - DateTime.Now.TimeOfDay.TotalMinutes) >= 180)
                         {
-                            <td>
-                                <a href="@Url.Action("DeleteOrder", "Account", new{ id = item.IdOrder })">
-                                    <span>
-                                        <strong style="color:#ef1616;">  Delete Order</strong>
-                                    </span>
-                                </a>
-                            </td>
+                    <td >
+                        <a >
+                            @Html.ActionLink("Cancel order", "DeleteOrder", new { id = item.IdOrder }, new { onclick = "return confirm('Are you sure you wish to delete this order?');", @style="color:#b40909; font:bold" })
+                         </a>
+                        
+                    </td>
 
                         }
                     </tr>
@@ -80,34 +110,34 @@
     </table>
 
 
-    
 
 
-    <h1>Previous Orders</h1>
+
+    <h1 style="font:bolder 40px arial">Previous Orders</h1>
     <table class="table" style="background-color:lightgrey">
         <thead>
             <tr style="background-color:#3d3a3a; color:white;">
                 <th>
-                    @Html.DisplayNameFor(model => model.IdOrder)
+                    No Order
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Status)
+                    Status
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Date)
+                    Date of Order
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.ShippingDate)
+                    Delivery Date
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.TotalPrice)
+                    Total Price
                 </th>
-                <th></th>
+                <th ></th>
             </tr>
         </thead>
 
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.orderlist)
             {
                 @if (item.Status.Equals("Completed"))
                 {
@@ -129,7 +159,11 @@
                             @Html.DisplayFor(modelItem => item.TotalPrice) CHF
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "DetailsOrder", new { id = item.IdOrder })
+                            <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.IdOrder })" class="btn" style="background-color:#aa1515;">
+                                <span>
+                                    <strong style="color:white;">Details</strong>
+                                </span>
+                            </a>
                         </td>
 
                         @if (item.Status.Equals("Not delivered") && (item.ShippingDate.Date == DateTime.Now.Date) && (item.ShippingDate.TimeOfDay.TotalMinutes - DateTime.Now.TimeOfDay.TotalMinutes) >= 180)

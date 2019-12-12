@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebAppVsEat.Models
 {
-    public class CartDish
+    public class DeliverData
     {
-        public List<Dish> ListA { get; set; }
-        public List<Cart> ListB { get; set; }
+        public User user { get; set; }
 
-
-        public double price { get; set; }
+        public City city { get; set; }
+        public List<OrderCustomer> orderlist { get; set; }
         
 
     }
