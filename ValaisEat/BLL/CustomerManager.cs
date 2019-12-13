@@ -17,29 +17,23 @@ namespace BLL
         }
 
 
-
+        //Get all the customers
         public List<Customer> GetCustomers()
         {
             return customerDB.GetCustomers();
         }
-
+        //Get a customer with idClient
         public Customer GetCustomer(int idClient)
         {
             return customerDB.GetCustomer(idClient);
         }
+        //Add a customer into the database
         public Customer AddCustomer(Customer customer)
         {
             return customerDB.AddCustomer(customer);
         }
-        public int UpdateCustomer(Customer customer)
-        {
-            return customerDB.UpdateCustomer(customer);
-        }
-        public int DeleteCustomer(int idClient)
-        {
-            return customerDB.DeleteCustomer(idClient);
-        }
 
+        //Check if the user is a customer
         public bool IsACustomer(User user)
         {
 
@@ -56,6 +50,7 @@ namespace BLL
             return false;
         }
 
+        //Get the customer with IdUser
         public int GetCustomerByIdUser(int id)
         {
             var list = GetCustomers();

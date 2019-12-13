@@ -9,8 +9,6 @@ namespace BLL
         List<Customer> GetCustomers();
         Customer GetCustomer(int idClient);
         Customer AddCustomer(Customer customer);
-        int UpdateCustomer(Customer customer);
-        int DeleteCustomer(int idClient);
 
         bool IsACustomer(User user);
 

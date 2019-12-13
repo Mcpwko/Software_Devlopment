@@ -25,10 +25,6 @@ namespace BLL
         {
             return orderDishesDB.AddOrder_Dishes(order);
         }
-        public int UpdateOrder_Dishes(Order_Dishes order)
-        {
-            return orderDishesDB.UpdateOrder_Dishes(order);
-        }
         public int DeleteOrder_Dishes(int idOrder)
         {
             return orderDishesDB.DeleteOrder_Dishes(idOrder);

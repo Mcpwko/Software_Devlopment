@@ -11,18 +11,19 @@ namespace BLL
     {
         public IDishDB dishDB { get; }
 
+        
         public DishManager(IConfiguration configuration)
         {
             dishDB = new DishDB(configuration);
         }
 
 
-
+        //Get all dishes
         public List<Dish> GetDishes(int idRestaurant)
         {
             return dishDB.GetDishes(idRestaurant);
         }
-
+        //Get a dish with IdDish
         public Dish GetDish(int id)
         {
             return dishDB.GetDish(id);

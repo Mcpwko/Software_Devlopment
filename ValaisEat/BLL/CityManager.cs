@@ -17,12 +17,12 @@ namespace BLL
             }
 
 
-
+            //Get all the Cities
             public List<City> GetCities()
             {
                 return cityDB.GetCities();
             }
-
+            //Get a city with IdCity
             public City GetCity(int id)
             {
                 return cityDB.GetCity(id);

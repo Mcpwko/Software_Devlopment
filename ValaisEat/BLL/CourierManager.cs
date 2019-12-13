@@ -15,17 +15,17 @@ namespace BLL
         {
             courierDB = new CourierDB(configuration);
         }
-
+        //Get all the couriers
         public List<Courier> GetCouriers()
         {
             return courierDB.GetCouriers();
         }
-
+        //Get a courier with IdCourier
         public Courier GetCourier(int IdCourier)
         {
             return courierDB.GetCourier(IdCourier);
         }
-
+        //Get a courier with IdUser
         public Courier GetCourierByUserId(int id)
         {
             var users = GetCouriers();
@@ -39,7 +39,7 @@ namespace BLL
 
             return user;
         }
-
+        //Get the list of courier that are in the same city
         public List<Courier> GetCouriersByUserIdSameCity(List<User> users)
         {
 

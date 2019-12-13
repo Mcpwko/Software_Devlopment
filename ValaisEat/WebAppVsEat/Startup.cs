@@ -33,9 +33,10 @@ namespace WebAppVsEat
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            //Add the services of the session to share data between controllers and views
             services.AddSession();
 
+            //Service for our login and logout
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
          options =>
@@ -47,6 +48,7 @@ namespace WebAppVsEat
              options.AccessDeniedPath = new PathString("/Home/Index");
          });
 
+            //Initiate all the class for Data Access
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserDB, UserDB>();
 

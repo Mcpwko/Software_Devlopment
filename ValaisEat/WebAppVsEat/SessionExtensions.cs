@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+//Allow to convert object to put it into a session and retrieve it
 namespace WebAppVsEat
 {
     public static class SessionExtensions
