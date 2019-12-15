@@ -48,7 +48,7 @@ namespace WebAppVsEat
              options.AccessDeniedPath = new PathString("/Home/Index");
          });
 
-            //Initiate all the class for Data Access
+            //Initiate all the classes for Data Access
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IUserDB, UserDB>();
 

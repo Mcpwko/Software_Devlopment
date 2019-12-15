@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BLL;
 using DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +10,7 @@ using WebAppVsEat.Models;
 
 namespace WebAppVsEat.Controllers
 {
-
+    //Allow only the customer to order and make a shopping cart
     [Authorize(Roles = "Customer")]
     public class CartController : Controller
     {
@@ -34,14 +33,9 @@ namespace WebAppVsEat.Controllers
             Order_DishesManager = order_DishesManager;
             RestaurantManager = restaurantManager;
         }
-        // GET: Cart
-        public ActionResult Index()
-        {
-            return View();
-        }
 
 
-        // GET: Cart/Details/5
+        //Show the shopping cart to the customer
         public ActionResult ShoppingCart()
         {
             var results = new List<Cart>();
@@ -49,14 +43,7 @@ namespace WebAppVsEat.Controllers
             if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") != null) {
             results = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
             }
-
-
             var date = DateTime.Now;
-            var timeDay = date.TimeOfDay;
-            var nextFullHour = TimeSpan.FromHours(Math.Ceiling(timeDay.TotalHours));
-
-
-            //ViewBag.Time = nextFullHour;
             date.AddMinutes(15);
 
             var dt1 = RoundUp(date, TimeSpan.FromMinutes(15));
@@ -69,22 +56,14 @@ namespace WebAppVsEat.Controllers
             // Displays the shopping cart
             return View(results);
         }
-
+        //Method that rounds the datetime to the nearest quarter of time
         public DateTime RoundUp(DateTime dt, TimeSpan d)
         {
             return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
-
+        //Method that add an item into the shopping cart
         public ActionResult AddItem(int id)
         {
-            /**string id2 = id + "";
-            var a = this.HttpContext.Session.GetString("Cart");
-
-            
-            HttpContext.Session.SetString("Cart", id2);
-
-
-            Response.Cookies.Append("MyCookie", id2);*/
 
             if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") == null)
             {
@@ -117,7 +96,7 @@ namespace WebAppVsEat.Controllers
 
             return RedirectToAction(("ShoppingCart"));
         }
-
+        //method that checks if a dish is already in the cart
         private int isExist(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
@@ -126,7 +105,7 @@ namespace WebAppVsEat.Controllers
                     return i;
             return -1;
         }
-
+        //method that removes a dish from the cart
         public ActionResult RemoveItem(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
@@ -144,7 +123,7 @@ namespace WebAppVsEat.Controllers
             return RedirectToAction("ShoppingCart");
         }
 
-
+        //Remove the dish from the cart
         public ActionResult RemoveAllItems(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
@@ -159,7 +138,7 @@ namespace WebAppVsEat.Controllers
 
         }
 
-
+        //Method that creates the order
         public ActionResult Order(string deliverytime)
         {
             User user = UserManager.GetUserByEmail(User.Identity.Name);
@@ -205,7 +184,7 @@ namespace WebAppVsEat.Controllers
             }
 
             var courriers = CourierManager.GetCouriers();
-            //@author : DeadEcho COEUR COEUR
+            
             OrderManager.GetNumberOfOrder(courriers[0].IdCourier,ts);
 
             
@@ -247,12 +226,12 @@ namespace WebAppVsEat.Controllers
             
         }
 
-
+        //Show a confirmation of the order
         public ActionResult Confirmation()
         {
             return View();
         }
-
+        //Show a message to explain that there is no courier available
         public ActionResult NoFreeCourier()
         {
             return View();

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BLL;
 using DTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,13 +18,7 @@ namespace WebAppVsEat.Controllers
             CustomerManager = customerManager;
         }
 
-        // GET: SignUp
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: SignUp/SignUp
+        //Sign up page
         public ActionResult SignUp()
         {
 
@@ -45,7 +35,7 @@ namespace WebAppVsEat.Controllers
             return View();
         }
 
-        // POST: SignUp/SignUp
+        // POST: Signup
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SignUp(User user)

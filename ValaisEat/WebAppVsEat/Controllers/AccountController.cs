@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BLL;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using DTO;
 using WebAppVsEat.Models;
@@ -35,8 +31,9 @@ namespace WebAppVsEat.Controllers
             CityManager = cityManager;
         }
         
+        //Allow the access only for the customer
         [Authorize(Roles = "Customer")]
-        // GET: Account
+        // Personal data and list of the orders of the customer
         public ActionResult Customer()
         {
             string name = User.Identity.Name;
@@ -60,7 +57,7 @@ namespace WebAppVsEat.Controllers
 
             return View(personalData);
         }
-
+        // Personal data and list of the orders of the courier
         public ActionResult Deliver()
         {
             string name = User.Identity.Name;
@@ -73,7 +70,7 @@ namespace WebAppVsEat.Controllers
             {
                 orderslist = OrderManager.GetOrdersByCourier(courier.IdCourier);
             }
-
+            //order by the idOrder descending
             var descendingOrder = orderslist.OrderByDescending(i => i.IdOrder);
 
             var orderCustomer = new List<OrderCustomer>();
@@ -98,7 +95,7 @@ namespace WebAppVsEat.Controllers
             return View(deliverData);
         
         }
-
+        //Update order status 
         public ActionResult ConfirmDelivery(int id)
         {
             OrderManager.UpdateOrderStatus(id);
@@ -106,7 +103,7 @@ namespace WebAppVsEat.Controllers
             return RedirectToAction("Deliver");
             
         }
-
+        //Show the details of an order
         public ActionResult DetailsOrder(int id)
         {
             OrderManager.GetOrder(id);
@@ -127,7 +124,7 @@ namespace WebAppVsEat.Controllers
             return View(cartlist);
 
         }
-
+        //Allow the customer to delete an order 3 hours before the delivery
         [Authorize(Roles ="Customer")]
         public ActionResult DeleteOrder(int id)
         {

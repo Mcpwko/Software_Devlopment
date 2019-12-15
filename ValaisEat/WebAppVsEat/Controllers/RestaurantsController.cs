@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using WebAppVsEat.Models;
 using BLL;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using DTO;
-using System.Web;
-using Newtonsoft.Json;
 
 
 namespace WebAppVsEat.Controllers
@@ -31,12 +26,7 @@ namespace WebAppVsEat.Controllers
             DishManager = dishManager;
             CityManager = cityManager;
         }
-        // GET: Restaurants
-        public ActionResult Index()
-        {
-            return View();
-        }
-        
+        //Show the list of all the restaurants
         public ActionResult Restaurants()
         {
             
@@ -50,7 +40,7 @@ namespace WebAppVsEat.Controllers
             return View(listrestaurant);
         }
 
-        // GET: Restaurants/Details/5
+        //Show all the dishes of one restaurant
         public ActionResult Details(int id)
         {
             
@@ -87,7 +77,6 @@ namespace WebAppVsEat.Controllers
             var nextFullHour = TimeSpan.FromHours(Math.Ceiling(timeDay.TotalHours));
 
 
-            //ViewBag.Time = nextFullHour;
             date.AddMinutes(15);
             
             var dt1 = RoundUp(date, TimeSpan.FromMinutes(15));
@@ -112,22 +101,14 @@ namespace WebAppVsEat.Controllers
             return View(viewModel);
             
         }
-
+        //Round the datetime to the nearest quarter time
         public DateTime RoundUp(DateTime dt, TimeSpan d)
         {
             return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
-
+        //Add an item to the shopping cart
         public ActionResult AddItem(int id)
         {
-            /**string id2 = id + "";
-            var a = this.HttpContext.Session.GetString("Cart");
-
-            
-            HttpContext.Session.SetString("Cart", id2);
-
-
-            Response.Cookies.Append("MyCookie", id2);*/
             
             if (HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart") == null)
             {
@@ -164,7 +145,7 @@ namespace WebAppVsEat.Controllers
 
             return RedirectToAction("Details/" + idResto);
         }
-
+        //Check if a dish already exists in the shopping cart
         private int isExist(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
@@ -173,7 +154,7 @@ namespace WebAppVsEat.Controllers
                     return i;
             return -1;
         }
-
+        //Remove a dish from your cart
         public ActionResult RemoveItem(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
@@ -194,7 +175,7 @@ namespace WebAppVsEat.Controllers
             return RedirectToAction("Details/"+ idResto);
         }
 
-
+        //Remove the dish from your cart
         public ActionResult RemoveAllItems(int id)
         {
             List<Cart> cart = HttpContext.Session.GetObjectFromJson<List<Cart>>("Cart");
@@ -210,86 +191,6 @@ namespace WebAppVsEat.Controllers
 
             return RedirectToAction("Details/" + idResto);
 
-        }
-
-
-        // GET: Restaurants/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Restaurants/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Restaurants/Edit/5
-        /**public ActionResult Edit(int id)
-        {
-            RestaurantManager rManager = new RestaurantManager(Configuration);
-            var restaurant = rManager.GetRestaurant(id);
-            return View(restaurant);
-        }
-        [HttpPost]
-        public ActionResult Edit (DTO.Restaurant r)
-        {
-            RestaurantManager rManager = new RestaurantManager(Configuration);
-            rManager.UpdateRestaurant(r);
-            return RedirectToAction(nameof(GetRestaurants));
-
-        }*/
-
-        // POST: Restaurants/Edit/5
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
-
-        // GET: Restaurants/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Restaurants/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }
