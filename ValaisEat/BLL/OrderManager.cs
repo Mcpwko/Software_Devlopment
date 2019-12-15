@@ -17,29 +17,32 @@ namespace BLL
         }
 
 
-
+        //Get all orders
         public List<Order> GetOrders()
         {
             return orderDB.GetOrders();
         }
-
+        //Get one order with IdOrder
         public Order GetOrder(int id)
         {
             return orderDB.GetOrder(id);
         }
+        //Add an order
         public Order AddOrder(Order order)
         {
             return orderDB.AddOrder(order);
         }
+        //Update an order
         public int UpdateOrder(Order order)
         {
             return orderDB.UpdateOrder(order);
         }
+        //Delete an order
         public int DeleteOrder(int idOrder)
         {
             return orderDB.DeleteOrder(idOrder);
         }
-
+        //Get all the orders with the same IdCourier
         public List<Order> GetOrdersByCourier(int id)
         {
             var orderslist = GetOrders();
@@ -58,7 +61,7 @@ namespace BLL
 
             return newlist;
         }
-
+        //Get all the orders with the same IdCustomer
         public List<Order> GetOrdersByCustomer(int id)
         {
             var orderslist = GetOrders();
@@ -79,7 +82,7 @@ namespace BLL
             return newlist;
         }
 
-
+        //Update the status of an order
         public void UpdateOrderStatus(int id)
         {
             Order order = GetOrder(id);
@@ -87,16 +90,10 @@ namespace BLL
             UpdateOrder(order);
 
         }
-
-        public void NumberOfOrderByCourrierLast30Minutes(int id)
+        //Get the number of an order with IdCourier
+        public int GetNumberOfOrder(int id, DateTime dateTime)
         {
-            GetOrdersByCourier(id);
-
-        }
-
-        public int GetNumberOfOrder(int id)
-        {
-            return orderDB.GetNumberOfOrder(id);
+            return orderDB.GetNumberOfOrder(id, dateTime);
         }
 
 

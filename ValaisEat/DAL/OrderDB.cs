@@ -214,19 +214,21 @@ namespace DAL
             return result;
         }
 
-        public int GetNumberOfOrder(int id)
+
+        public int GetNumberOfOrder(int id,DateTime dateTime)
         {
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            int result =0;
+            int result = 0;
 
             try
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
 
-                    string query = "SELECT COUNT(IdOrder)FROM [Order]WHERE ShippingDate <=dateadd(minute, +30, GetDate()) AND ShippingDate>=dateadd(minute,0,GETDATE()) AND IdCourier=@IdCourier AND Status='Not delivered' GROUP BY IdCourier ";
+                    string query = "SELECT COUNT(IdOrder) FROM [Order] WHERE ShippingDate <=dateadd(minute, +15, @ShippingDate) AND ShippingDate>=dateadd(minute,-15,@ShippingDate) AND IdCourier=@IdCourier AND Status='Not delivered' GROUP BY IdCourier";
                     SqlCommand cmd = new SqlCommand(query, cn);
                     cmd.Parameters.AddWithValue("@IdCourier", id);
+                    cmd.Parameters.AddWithValue("@ShippingDate",dateTime);
 
                     cn.Open();
 
@@ -236,11 +238,6 @@ namespace DAL
                         {
 
                             result = (int)dr[0];
-
-
-
-
-
                         }
                     }
 

@@ -15,6 +15,6 @@ namespace BLL
         List<Order> GetOrdersByCourier(int id);
         List<Order> GetOrdersByCustomer(int id);
         void UpdateOrderStatus(int id);
-        int GetNumberOfOrder(int id);
+        int GetNumberOfOrder(int id, DateTime dateTime);
     }
 }

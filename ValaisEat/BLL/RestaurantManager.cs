@@ -17,17 +17,17 @@ namespace BLL
         }
 
 
-
+        //Get all the restaurants
         public List<Restaurant> GetRestaurants()
         {
             return restaurantDB.GetRestaurants();
         }
-
+        //Get a restaurant with an IdRestaurant
         public Restaurant GetRestaurant(int id)
         {
             return restaurantDB.GetRestaurant(id);
         }
-
+        //Get the city of a Restaurant
         public int GetCityFromRestaurant(int id)
         {
             Restaurant resto = GetRestaurant(id);

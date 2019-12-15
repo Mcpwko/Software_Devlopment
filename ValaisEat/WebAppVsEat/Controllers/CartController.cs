@@ -172,37 +172,43 @@ namespace WebAppVsEat.Controllers
 
             var users = UserManager.GetUsersByIdCity(idcity);
 
-            var couriers = CourierManager.GetCouriersByUserIdSameCity(users); //NE MARCHE PAS A REPARER JEUDI
+            var couriers = CourierManager.GetCouriersByUserIdSameCity(users);
 
+            //Check if there is a courier in the same city as the restaurant
             if (!couriers.Any())
             {
-                return RedirectToAction("NoFreeCourier");//PAS DE LIVREUR DISPONIBLE
+                return RedirectToAction("NoFreeCourier");
             }
 
             var orders = OrderManager.GetOrders();
             List<Courier> courierFree = new List<Courier>();
 
+            //Retrieve the date of the order and the delivery date from the view ShoppingCart or Restaurants/Details
+            string tspan = Convert.ToString(deliverytime);
+            DateTime dt = DateTime.Now;
+            DateTime ts = DateTime.Parse(tspan);
+
+
             foreach (var courier in couriers)
             {
                 
-                if (OrderManager.GetNumberOfOrder(courier.IdCourier) < 5)
+                if (OrderManager.GetNumberOfOrder(courier.IdCourier,ts) < 5)
                 {
                     courierFree.Add(courier);
                 }
             }
 
+            //Check if any courier is available
             if (!courierFree.Any())
             {
-                return RedirectToAction("NoFreeCourier");//PAS DE LIVREUR DISPONIBLE
+                return RedirectToAction("NoFreeCourier");
             }
 
             var courriers = CourierManager.GetCouriers();
             //@author : DeadEcho COEUR COEUR
-            OrderManager.GetNumberOfOrder(courriers[0].IdCourier);
+            OrderManager.GetNumberOfOrder(courriers[0].IdCourier,ts);
 
-            string tspan = Convert.ToString(deliverytime);
-            DateTime dt = DateTime.Now;
-            DateTime ts = DateTime.Parse(tspan);
+            
 
             
 

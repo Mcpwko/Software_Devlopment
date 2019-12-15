@@ -34,6 +34,7 @@ namespace WebAppVsEat.Controllers
             DishManager = dishManager;
             CityManager = cityManager;
         }
+        
         [Authorize(Roles = "Customer")]
         // GET: Account
         public ActionResult Customer()

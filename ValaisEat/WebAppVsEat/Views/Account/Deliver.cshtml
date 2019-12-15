@@ -76,48 +76,118 @@
         <tbody>
             @foreach (var item in Model.orderlist)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.order.IdOrder)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.order.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.order.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.order.ShippingDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.order.TotalPrice) CHF
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.user.Firstname) @Html.DisplayFor(modelItem => item.user.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.user.Adress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.city.NPA) @Html.DisplayFor(modelItem => item.city.CityName)
-                </td>
-                <td>
-                    <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.order.IdOrder })" class="btn" style="background-color:#aa1515;">
-                        <span>
-                            <strong style="color:white;">Details</strong>
-                        </span>
-                    </a>
-                </td>
                 @if (!item.order.Status.Equals("Completed"))
                 {
-                    <td>
-                        @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.order.IdOrder })
-                    </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.IdOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.ShippingDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.TotalPrice) CHF
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user.Firstname) @Html.DisplayFor(modelItem => item.user.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.user.Adress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.city.NPA) @Html.DisplayFor(modelItem => item.city.CityName)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DetailsOrder", "Account", new { id = item.order.IdOrder })" class="btn" style="background-color:#aa1515;">
+                                <span>
+                                    <strong style="color:white;">Details</strong>
+                                </span>
+                            </a>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Confirm the delivery", "ConfirmDelivery", new { id = item.order.IdOrder })
+                        </td>
+                        
+                    </tr>
+                    }
                 }
+            </tbody>
+    </table>
+
+
+
+
+    <h1 style="font:bolder 40px arial">Archived Orders</h1>
+    <table class="table" style="background-color:lightgrey">
+        <thead>
+            <tr style="background-color:#3d3a3a; color:white;">
+                <th>
+                    No Order
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Date of Order
+                </th>
+                <th>
+                    Delivery Date
+                </th>
+                <th>
+                    Total Price
+                </th>
+                <th></th>
             </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.orderlist)
+            {
+                @if (item.order.Status.Equals("Completed"))
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.IdOrder)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.ShippingDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order.TotalPrice) CHF
+                        </td>
+                        <td>
+                            <a href="@Url.Action("DetailsOrder", "Account", new{ id = item.order.IdOrder })" class="btn" style="background-color:#aa1515;">
+                                <span>
+                                    <strong style="color:white;">Details</strong>
+                                </span>
+                            </a>
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
+
+
+
+
+
+
+
+
 }
 else
 {

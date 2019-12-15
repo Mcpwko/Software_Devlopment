@@ -17,14 +17,17 @@ namespace BLL
         }
 
 
+        //Get all order_dishes
         public List<Order_Dishes> GetOrder_Dishes(int id)
         {
             return orderDishesDB.GetOrder_Dishes(id);
         }
+        //Add one dish and a quantity for an order
         public Order_Dishes AddOrder_Dishes(Order_Dishes order)
         {
             return orderDishesDB.AddOrder_Dishes(order);
         }
+        //Delete an order_dishes
         public int DeleteOrder_Dishes(int idOrder)
         {
             return orderDishesDB.DeleteOrder_Dishes(idOrder);
